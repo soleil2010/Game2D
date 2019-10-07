@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MonoGame
 {
+    /// <summary>
+    /// Define or Get the location for an object
+    /// </summary>
     public class Location
     {
         private int _x;
