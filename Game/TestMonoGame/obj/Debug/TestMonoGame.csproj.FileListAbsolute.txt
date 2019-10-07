@@ -1,0 +1,16 @@
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\TestMonoGame.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\TestMonoGame.pdb
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\MonoGame.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\MonoGame.pdb
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+E:\Prog\csharp\Game2D\Game\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+E:\Prog\csharp\Game2D\Game\TestMonoGame\obj\Debug\TestMonoGame.csprojAssemblyReference.cache
+E:\Prog\csharp\Game2D\Game\TestMonoGame\obj\Debug\TestMonoGame.csproj.CoreCompileInputs.cache
+E:\Prog\csharp\Game2D\Game\TestMonoGame\obj\Debug\TestMonoGame.csproj.CopyComplete
+E:\Prog\csharp\Game2D\Game\TestMonoGame\obj\Debug\TestMonoGame.dll
+E:\Prog\csharp\Game2D\Game\TestMonoGame\obj\Debug\TestMonoGame.pdb

@@ -1,0 +1,4 @@
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\b\MonoGame\bin\Debug\MonoGame.dll
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\MonoGame\Debug\MonoGame.csproj.CoreCompileInputs.cache
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\MonoGame\Debug\MonoGame.csproj.CopyComplete
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\MonoGame\Debug\MonoGame.dll
