@@ -18,17 +18,22 @@ namespace MonoGame
         private int _maxHealth;
         private int _speed;
         private Location _location;
-        private bool _squad;
+        private bool _squat;
         private bool _jump;
         private bool _eat;
         #endregion Private attributes
 
         #region Constructor
+        /// <summary>
+        /// A Character has a max health and not eat, jump or eat when he is created.
+        /// Its default location is 0;0
+        /// </summary>
+        /// <param name="maxHealth"></param>
         public Character(int maxHealth)
         {
             _location = new Location();
             _maxHealth = maxHealth;
-            _squad = false;
+            _squat = false;
             _jump = false;
             _eat = false;
         }
@@ -54,7 +59,7 @@ namespace MonoGame
                     this._jump = true;
                     break;
                 case Directions.Down:
-                    this._squad = true;
+                    this._squat = true;
                     break;
             }
         }
@@ -64,7 +69,9 @@ namespace MonoGame
         #endregion Private methods
 
         #region Accessors
-
+        /// <summary>
+        /// Get or modify the current health
+        /// </summary>
         public int CurrentHealth
         {
             get
@@ -76,6 +83,9 @@ namespace MonoGame
                 this._currentHealth = value;
             }
         }
+        /// <summary>
+        /// Get the max health of your character
+        /// </summary>
         public int MaxHealth
         {
             get
@@ -83,6 +93,9 @@ namespace MonoGame
                 return this._maxHealth;
             }
         }
+        /// <summary>
+        /// Modify or get the speed of your character
+        /// </summary>
         public int Speed
         {
             get
@@ -94,17 +107,23 @@ namespace MonoGame
                 this._speed = value;
             }
         }
-        public bool Squad
+        /// <summary>
+        /// Define or get if your character squat
+        /// </summary>
+        public bool Squat
         {
             get
             {
-                return this._squad;
+                return this._squat;
             }
             set
             {
-                this._squad = value;
+                this._squat = value;
             }
         }
+        /// <summary>
+        /// Define or get if your character jump
+        /// </summary>
         public bool Jump
         {
 
@@ -117,6 +136,9 @@ namespace MonoGame
                 this._jump = value;
             }
         }
+        /// <summary>
+        /// Define or get if your character eat
+        /// </summary>
         public bool Eat
         {
             get
@@ -128,6 +150,9 @@ namespace MonoGame
                 this._eat = value;
             }
         }
+        /// <summary>
+        /// get the current location of character or define a new location
+        /// </summary>
         public Location Location
         {
             get

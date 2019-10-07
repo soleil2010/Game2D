@@ -9,7 +9,7 @@ namespace MonoGame
         private int _currentHealth;
         private int _maxHealth;
         private int _speed;
-        private bool _squad;
+        private bool _squat;
         private bool _jump;
         private bool _eat;
         private int _posX;
@@ -72,17 +72,17 @@ namespace MonoGame
             Assert.AreEqual(this._jump, this._character.Jump);
         } 
         [TestMethod]
-        public void TestSquadFail()
+        public void TestSquatFail()
         {
-            this._squad = true;
-            Assert.AreNotEqual(this._squad, this._character.Squad);
+            this._squat = true;
+            Assert.AreNotEqual(this._squat, this._character.Squat);
         }
         [TestMethod]
-        public void TestSquadSuccess()
+        public void TestSquatSuccess()
         {
             this._character.Move(Directions.Down);
-            this._squad = true;
-            Assert.AreEqual(this._squad, this._character.Squad);
+            this._squat = true;
+            Assert.AreEqual(this._squat, this._character.Squat);
         }
         [TestMethod]
         public void TestEatFail()
