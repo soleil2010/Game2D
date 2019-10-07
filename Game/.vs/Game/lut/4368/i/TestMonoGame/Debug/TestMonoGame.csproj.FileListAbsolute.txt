@@ -1,0 +1,8 @@
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\b\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\b\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\b\TestMonoGame\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\b\TestMonoGame\bin\Debug\TestMonoGame.dll
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\TestMonoGame\Debug\TestMonoGame.csprojAssemblyReference.cache
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\TestMonoGame\Debug\TestMonoGame.csproj.CoreCompileInputs.cache
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\TestMonoGame\Debug\TestMonoGame.csproj.CopyComplete
+E:\Prog\csharp\Game2D\Game\.vs\Game\lut\0\i\TestMonoGame\Debug\TestMonoGame.dll

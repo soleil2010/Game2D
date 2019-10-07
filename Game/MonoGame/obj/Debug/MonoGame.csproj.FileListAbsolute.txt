@@ -1,0 +1,6 @@
+E:\Prog\csharp\Game2D\Game\MonoGame\bin\Debug\MonoGame.dll
+E:\Prog\csharp\Game2D\Game\MonoGame\bin\Debug\MonoGame.pdb
+E:\Prog\csharp\Game2D\Game\MonoGame\obj\Debug\MonoGame.csprojAssemblyReference.cache
+E:\Prog\csharp\Game2D\Game\MonoGame\obj\Debug\MonoGame.csproj.CoreCompileInputs.cache
+E:\Prog\csharp\Game2D\Game\MonoGame\obj\Debug\MonoGame.dll
+E:\Prog\csharp\Game2D\Game\MonoGame\obj\Debug\MonoGame.pdb

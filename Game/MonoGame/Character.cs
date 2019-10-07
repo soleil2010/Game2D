@@ -6,37 +6,54 @@ using System.Threading.Tasks;
 
 namespace MonoGame
 {
+    /// <summary>
+    /// allows to use a term for the direction, avoiding writing errors.
+    /// exemple: Directions.Up mean top direction
+    /// </summary>
+    public enum Directions { Up, Down, Left, Right };
     public class Character
     {
         #region Private attributes
         private int _currentHealth;
         private int _maxHealth;
         private int _speed;
-        private int _posX;
-        private int _posY;
+        private Location _location;
         private bool _squad;
         private bool _jump;
         private bool _eat;
         #endregion Private attributes
 
         #region Constructor
+        public Character(int maxHealth)
+        {
+            _location = new Location();
+            _maxHealth = maxHealth;
+            _squad = false;
+            _jump = false;
+            _eat = false;
+        }
         #endregion Constructor
 
         #region Public methods
-        public void Move(string direction)
+        /// <summary>
+        /// What's direction your character move?
+        /// Left, Right, Top or Down?
+        /// </summary>
+        /// <param name="direction"></param>
+        public void Move(Directions direction)
         {
             switch(direction)
             {
-                case "left":
-                    this._posX -= this._speed;
+                case Directions.Left:
+                    this._location.X -= this._speed;
                     break;
-                case "right":
-                    this._posX += this._speed;
+                case Directions.Right:
+                    this._location.X += this._speed;
                     break;
-                case "up":
+                case Directions.Up:
                     this._jump = true;
                     break;
-                case "down":
+                case Directions.Down:
                     this._squad = true;
                     break;
             }
@@ -47,6 +64,7 @@ namespace MonoGame
         #endregion Private methods
 
         #region Accessors
+
         public int CurrentHealth
         {
             get
@@ -60,19 +78,13 @@ namespace MonoGame
         }
         public int MaxHealth
         {
-
             get
             {
                 return this._maxHealth;
             }
-            set
-            {
-                this._maxHealth = value;
-            }
         }
         public int Speed
         {
-
             get
             {
                 return this._speed;
@@ -107,7 +119,6 @@ namespace MonoGame
         }
         public bool Eat
         {
-
             get
             {
                 return this._eat;
@@ -117,7 +128,17 @@ namespace MonoGame
                 this._eat = value;
             }
         }
-        
+        public Location Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+                this._location = value;
+            }
+        }
         #endregion Accessors
     }
 }
