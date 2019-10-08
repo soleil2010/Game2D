@@ -29,10 +29,11 @@ namespace MonoGame
         /// Its default location is 0;0
         /// </summary>
         /// <param name="maxHealth"></param>
-        public Character(int maxHealth)
+        public Character(int maxHealth, int speed)
         {
             _location = new Location();
             _maxHealth = maxHealth;
+            _currentHealth = maxHealth;
             _squat = false;
             _jump = false;
             _eat = false;

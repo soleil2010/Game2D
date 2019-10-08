@@ -6,25 +6,22 @@ namespace MonoGame
     [TestClass]
     public class TestCharacter
     {
-        private int _currentHealth;
+        #region Private attributes
         private int _maxHealth;
         private int _speed;
-        private bool _squat;
-        private bool _jump;
-        private bool _eat;
         private int _posX;
-        private int _posY;
         private Character _character;
+        #endregion Private attributes
+
         [TestInitialize]
         public void Init()
         {
             this._maxHealth = 100;
             this._posX = 10;
-            this._posY = 0;
             this._speed = 5;
-            this._character = new Character(_maxHealth);
+            this._character = new Character(_maxHealth, _speed);
             this._character.Speed = this._speed;
-            this._character.Location = new Location(_posX,_posY);
+            this._character.Location = new Location(_posX,0);
         }
         [TestMethod]
         public void TestMaxHealth()
@@ -34,14 +31,12 @@ namespace MonoGame
         [TestMethod]
         public void TestCurrentHealth()
         {
-            this._character.CurrentHealth=100;
-            this._currentHealth = 100;
-            Assert.AreEqual(this._currentHealth, this._character.CurrentHealth);
+            int currentHealth = 100;
+            Assert.AreEqual(currentHealth, this._character.CurrentHealth);
         }
         [TestMethod]
         public void TestSpeed()
         {
-            this._character.Speed=5;
             Assert.AreEqual(this._speed, this._character.Speed);
         } 
         [TestMethod]
@@ -61,41 +56,36 @@ namespace MonoGame
         [TestMethod]
         public void TestJumpFail()
         {
-            this._jump = true;
-            Assert.AreNotEqual(this._jump, this._character.Jump);
+            Assert.IsFalse(this._character.Jump);
         }    
         [TestMethod]
         public void TestJumpSuccess()
         {
             this._character.Move(Directions.Up);
-            this._jump = true;
-            Assert.AreEqual(this._jump, this._character.Jump);
+
+            Assert.IsTrue( this._character.Jump);
         } 
         [TestMethod]
         public void TestSquatFail()
         {
-            this._squat = true;
-            Assert.AreNotEqual(this._squat, this._character.Squat);
+            Assert.IsFalse(this._character.Squat);
         }
         [TestMethod]
         public void TestSquatSuccess()
         {
             this._character.Move(Directions.Down);
-            this._squat = true;
-            Assert.AreEqual(this._squat, this._character.Squat);
+            Assert.IsTrue( this._character.Squat);
         }
         [TestMethod]
         public void TestEatFail()
         {
-            this._eat = true;
-            Assert.AreNotEqual(this._eat, this._character.Eat);
+            Assert.IsFalse(this._character.Eat);
         }
         [TestMethod]
         public void TestEatSuccess()
         {
             this._character.Eat=true;
-            this._eat = true;
-            Assert.AreEqual(this._eat, this._character.Eat);
+            Assert.IsTrue(this._character.Eat);
         }
     }
 }
