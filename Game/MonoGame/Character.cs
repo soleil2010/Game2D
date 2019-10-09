@@ -16,6 +16,9 @@ namespace MonoGame
         #region Private attributes
         private int _currentHealth;
         private int _maxHealth;
+        private int _damages;
+        private int _defense;// physical defense
+        private int _resistance;// magic resistance
         private int _speed;
         private Location _location;
         private bool _squat;
@@ -28,14 +31,22 @@ namespace MonoGame
         /// A Character has a max health and not eat, jump or eat when he is created.
         /// Its default location is 0;0
         /// </summary>
-        /// <param name="maxHealth"></param>
-        public Character(int maxHealth)
+        /// <param name="maxHealth">max health of character</param>
+        /// <param name="speed">move speed of character</param>
+        /// <param name="defense">total damages you can protect by physical attack</param>
+        /// <param name="resistance">total damages you can protect by magic attack</param>
+        /// <param name="damages">total physical damages</param>
+        public Character(int maxHealth, int speed, int defense, int resistance, int damages)
         {
-            _location = new Location();
-            _maxHealth = maxHealth;
-            _squat = false;
-            _jump = false;
-            _eat = false;
+            this._location = new Location();
+            this._maxHealth = maxHealth;
+            this._currentHealth = maxHealth;
+            this._squat = false;
+            this._jump = false;
+            this._eat = false;
+            this._defense = defense;
+            this._resistance = resistance;
+            this._damages = damages;
         }
         #endregion Constructor
 
@@ -105,6 +116,48 @@ namespace MonoGame
             set
             {
                 this._speed = value;
+            }
+        }
+        /// <summary>
+        /// Modify or get the phyysical defence of your character
+        /// </summary>
+        public int Defense
+        {
+            get
+            {
+                return this._defense;
+            }
+            set
+            {
+                this._defense = value;
+            }
+        }
+        /// <summary>
+        /// Modify or get the magic resistance of your character
+        /// </summary>
+        public int Resistance
+{
+            get
+            {
+                return this._resistance;
+            }
+            set
+            {
+                this._resistance = value;
+            }
+        }
+        /// <summary>
+        /// Modify or get the physical damages of your character
+        /// </summary>
+        public int Damages
+{
+            get
+            {
+                return this._damages;
+            }
+            set
+            {
+                this._damages = value;
             }
         }
         /// <summary>
