@@ -9,6 +9,9 @@ namespace MonoGame
         #region Private attributes
         private int _maxHealth;
         private int _speed;
+        private int _defense;
+        private int _resistance;
+        private int _damages;
         private int _posX;
         private Character _character;
         #endregion Private attributes
@@ -19,7 +22,10 @@ namespace MonoGame
             this._maxHealth = 100;
             this._posX = 10;
             this._speed = 5;
-            this._character = new Character(_maxHealth, _speed);
+            this._resistance = 0;
+            this._defense = 10;
+            this._damages = 10;
+            this._character = new Character(_maxHealth, _speed,_defense,_resistance,_damages);
             this._character.Speed = this._speed;
             this._character.Location = new Location(_posX,0);
         }
@@ -33,6 +39,21 @@ namespace MonoGame
         {
             int currentHealth = 100;
             Assert.AreEqual(currentHealth, this._character.CurrentHealth);
+        }
+        [TestMethod]
+        public void TestDefense()
+        {
+            Assert.AreEqual(this._defense, this._character.Defense);
+        }
+        [TestMethod]
+        public void TestResistance()
+        {
+            Assert.AreEqual(this._resistance, this._character.Resistance);
+        }
+        [TestMethod]
+        public void TestDamages()
+        {
+            Assert.AreEqual(this._damages, this._character.Damages);
         }
         [TestMethod]
         public void TestSpeed()

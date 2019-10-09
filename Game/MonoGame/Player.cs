@@ -21,7 +21,10 @@ namespace MonoGame
         /// <param name="maxHealth">Max health of player</param>
         /// <param name="speed">Player's basic speed to move in world</param>
         /// <param name="maxMana">Magic points to use magic power</param>
-        public Player(int maxHealth, int speed, int maxMana) : base(maxHealth, speed)
+        /// <param name="damages">Physical damages of player</param>
+        /// <param name="defense">Player's physical defence</param>
+        /// <param name="resistance">Magic resistance</param>
+        public Player(int maxHealth, int speed, int defense, int resistance, int damages, int maxMana) : base(maxHealth, speed, defense, resistance, damages)
         {
             this._maxMana = maxMana;
             this._currentMana = MaxMana;

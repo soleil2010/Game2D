@@ -15,7 +15,7 @@ namespace MonoGame
         public void Init()
         {
             this._maxMana = 20;
-            this._player = new Player(100, 5, _maxMana);
+            this._player = new Player(100, 5, 10, 0,50, _maxMana);
         }
         [TestMethod]
         public void TestMaxMana()
