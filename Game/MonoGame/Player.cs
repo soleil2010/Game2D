@@ -38,8 +38,8 @@ namespace MonoGame
         /// </summary>
         public void Jumping()
         {
-            base.Jump = true;
-            Console.WriteLine("I jump to infinity and the afterlife");
+            if(base.Jump)
+                Console.WriteLine("I jump to infinity and the afterlife");
             base.Jump = false;
         }
         /// <summary>
@@ -47,8 +47,8 @@ namespace MonoGame
         /// </summary>
         public void Squating()
         {
-            base.Squat = true;
-            Console.WriteLine("You will not see me, little discreet laugh.");
+            if(base.Squat)
+                Console.WriteLine("You will not see me, little discreet laugh.");
         }
         /// <summary>
         /// Squat to hide presence 

@@ -58,21 +58,14 @@ namespace MonoGame
         /// <param name="direction"></param>
         public void Move(Directions direction)
         {
-            switch(direction)
-            {
-                case Directions.Left:
-                    this._location.X -= this._speed;
-                    break;
-                case Directions.Right:
-                    this._location.X += this._speed;
-                    break;
-                case Directions.Up:
-                    this._jump = true;
-                    break;
-                case Directions.Down:
-                    this._squat = true;
-                    break;
-            }
+            if(direction == Directions.Left)
+                this._location.X -= this._speed;
+            if(direction == Directions.Right)
+                this._location.X += this._speed;
+            if (direction == Directions.Up)
+                this._jump = true;
+            if (direction == Directions.Down)
+                this._squat = true;
         }
         #endregion Public methods
 
