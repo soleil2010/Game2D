@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="TestCharacter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestLocation.cs" />
+    <Compile Include="TestPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
