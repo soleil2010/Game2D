@@ -100,6 +100,8 @@ namespace MonoGame
         [TestMethod]
         public void TestEatFail()
         {
+            this._character.Eat = true;
+            this._character.Eating("Banana");
             Assert.IsFalse(this._character.Eat);
         }
         [TestMethod]
@@ -107,6 +109,35 @@ namespace MonoGame
         {
             this._character.Eat=true;
             Assert.IsTrue(this._character.Eat);
+        }
+        [TestMethod]
+        public void TestEndJumping()
+        {
+            _character.Jump = true;
+            _character.Jumping();
+
+            Assert.IsFalse(_character.Jump);
+        }
+        [TestMethod]
+        public void TestSquating()
+        {
+            _character.Squating();
+
+            Assert.IsTrue(_character.Squat);
+        }
+        [TestMethod]
+        public void TestGetUp()
+        {
+            _character.Squating();
+            _character.GetUp();
+
+            Assert.IsFalse(_character.Squat);
+        }
+        [TestMethod]
+        public void TestEndEating()
+        {
+            _character.Eating("Apple");
+            Assert.IsFalse(_character.Eat);
         }
     }
 }
