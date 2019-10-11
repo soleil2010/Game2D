@@ -14,7 +14,6 @@ namespace MonoGame
         private bool _flee;
         private bool _pickUp;
         //private bool eat; // fait déjà partie de Character
-        private bool _attack;
         private bool _threw;
         #endregion Private Attributes
 
@@ -25,27 +24,31 @@ namespace MonoGame
         /// <param name="maxHealth">Monster's max Health</param>
         /// <param name="speed"></param>
         /// <param name="defense"></param>
-        /// <param name="Damage"></param>
-        public Monster(int maxHealth, int speed, int defense, int damage)
+        /// <param name="damages"></param>
+        public Monster(int maxHealth, int speed, int defense, int resistance, int damages) : base(maxHealth, speed, defense, resistance, damages)
         {
-            this.MaxHealth = maxHealth;
-            this.Speed = speed;
-            this.Defense = defense;
-            this.Damage = damage;
+
         }
         #endregion Constructor
 
         #region Methods
+        public void Flee()
+        {
+            double calculLife = this.CurrentHealth/ this.MaxHealth;
+            int lifePercent = Convert.ToInt32(Math.Round(calculLife, MidpointRounding.AwayFromZero));
+            if (lifePercent <= 10)
+            {
+                this._flee = true;
+            }
+        }
+
+        public void FleeDirection(Directions direction)
+        {
+
+        }
         #endregion Methods
 
         #region Accessors
-        public bool Flee
-        {
-            get
-            {
-                return this._flee = true;
-            }
-        }
 
         public bool PickUp
         {

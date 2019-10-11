@@ -42,12 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Location.cs" />
-    <Compile Include="Player.cs" />
-=======
     <Compile Include="Monster.cs" />
->>>>>>> Stashed changes
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
