@@ -58,21 +58,62 @@ namespace MonoGame
         /// <param name="direction"></param>
         public void Move(Directions direction)
         {
-            switch(direction)
+            if(direction == Directions.Left)
+                this._location.X -= this._speed;
+            if(direction == Directions.Right)
+                this._location.X += this._speed;
+            if (direction == Directions.Up)
+                this._jump = true;
+            if (direction == Directions.Down)
+                this._squat = true;
+        }
+        /// <summary>
+        /// Jump on the world
+        /// show an message on console
+        /// </summary>
+        public void Jumping()
+        {
+            if (this._jump)
+                Console.WriteLine("I jump to infinity and the afterlife");
+            this._jump = false;
+        }
+        /// <summary>
+        /// Squat to hide presence 
+        /// </summary>
+        public void Squating()
+        {
+            if (!this._squat)
             {
-                case Directions.Left:
-                    this._location.X -= this._speed;
-                    break;
-                case Directions.Right:
-                    this._location.X += this._speed;
-                    break;
-                case Directions.Up:
-                    this._jump = true;
-                    break;
-                case Directions.Down:
-                    this._squat = true;
-                    break;
+                Console.WriteLine("You will not see me, little discreet laugh.");
+                this._squat = true;
             }
+        }
+        /// <summary>
+        /// Squat to hide presence 
+        /// </summary>
+        public void GetUp()
+        {
+            Console.WriteLine("Enemy is far, i can get up now...");
+            this._squat = false;
+        }
+        /// <summary>
+        /// Eat to restore health
+        /// </summary>
+        /// <param name="fruit"></param>
+        public void Eating(string fruit)
+        {
+            this._eat = true;
+            Console.WriteLine("Take " + fruit);
+
+            Console.Write("Eating the " + fruit);
+            for (int i = 0; i < 6; i++)
+            {
+                Console.Write(".");
+                System.Threading.Thread.Sleep(300);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Its was good!");
+            this._eat = false;
         }
         #endregion Public methods
 
