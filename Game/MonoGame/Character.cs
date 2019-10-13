@@ -65,7 +65,7 @@ namespace MonoGame
             if (direction == Directions.Up)
                 this._jump = true;
             if (direction == Directions.Down)
-                this._squat = true;
+                Squating();
         }
         /// <summary>
         /// Jump on the world
@@ -82,38 +82,43 @@ namespace MonoGame
         /// </summary>
         public void Squating()
         {
-            if (!this._squat)
-            {
-                Console.WriteLine("You will not see me, little discreet laugh.");
-                this._squat = true;
-            }
+            this._squat = true;
+            Console.WriteLine("You will not see me, little discreet laugh.");
         }
         /// <summary>
         /// Squat to hide presence 
         /// </summary>
         public void GetUp()
         {
-            Console.WriteLine("Enemy is far, i can get up now...");
-            this._squat = false;
+            if (this._squat)
+            {
+                Console.WriteLine("Enemy is far, i can get up now...");
+                this._squat = false;
+            }
         }
         /// <summary>
         /// Eat to restore health
         /// </summary>
         /// <param name="fruit"></param>
-        public void Eating(string fruit)
+        public void Eating(Food food)
         {
-            this._eat = true;
-            Console.WriteLine("Take " + fruit);
-
-            Console.Write("Eating the " + fruit);
-            for (int i = 0; i < 6; i++)
+           if(this.Eat)
             {
-                Console.Write(".");
-                System.Threading.Thread.Sleep(300);
+                if(food.Effect!=null)
+                {
+                    switch(food.Effect.Type)
+                    {
+                        case Type.Regeneration:
+                            food.Effect.Regeneration(value => this.CurrentHealth += value, 100, 2);
+                            break;
+                        case Type.Buff:
+                            break;
+                        case Type.Sickness:
+                            break;
+                    }
+                }
+                this.Eat = false;
             }
-            Console.WriteLine();
-            Console.WriteLine("Its was good!");
-            this._eat = false;
         }
         #endregion Public methods
 
@@ -133,6 +138,8 @@ namespace MonoGame
             set
             {
                 this._currentHealth = value;
+                if (this._currentHealth > this._maxHealth)
+                    this._currentHealth = this._maxHealth;
             }
         }
         /// <summary>

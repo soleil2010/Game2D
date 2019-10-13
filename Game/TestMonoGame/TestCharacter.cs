@@ -48,57 +48,86 @@ namespace MonoGame
             int currentHealth = 100;
             Assert.AreEqual(currentHealth, this._character.CurrentHealth);
         }
+        /// <summary>
+        /// player has the same defense after initialization
+        /// </summary>
         [TestMethod]
         public void TestDefense()
         {
             Assert.AreEqual(this._defense, this._character.Defense);
         }
+        /// <summary>
+        /// player has the same resistance after initialization
+        /// </summary>
         [TestMethod]
         public void TestResistance()
         {
             Assert.AreEqual(this._resistance, this._character.Resistance);
         }
+        /// <summary>
+        /// player has the same damages after initialization
+        /// </summary>
         [TestMethod]
         public void TestDamages()
         {
             Assert.AreEqual(this._damages, this._character.Damages);
         }
+        /// <summary>
+        /// player has the same speed after initialization
+        /// </summary>
         [TestMethod]
         public void TestSpeed()
         {
             Assert.AreEqual(this._speed, this._character.Speed);
         } 
+        /// <summary>
+        /// position x of player increment after right move
+        /// </summary>
         [TestMethod]
         public void TestMoveRight()
         {
             this._posX += this._speed;
             this._character.Move(Directions.Right);
             Assert.AreEqual(this._posX, this._character.Location.X);
-        }      
+        }
+        /// <summary>
+        /// position x of player decrement after left move
+        /// </summary>
         [TestMethod]
         public void TestMoveLeft()
         {
             this._posX -= this._speed;
             this._character.Move(Directions.Left);
             Assert.AreEqual(this._posX, this._character.Location.X);
-        }          
+        }
+        /// <summary>
+        /// We not click to jump, value must be false
+        /// </summary>
         [TestMethod]
         public void TestJumpFail()
         {
             Assert.IsFalse(this._character.Jump);
-        }    
+        }
+        /// <summary>
+        /// We click to jump, value must be true
+        /// </summary>
         [TestMethod]
         public void TestJumpSuccess()
         {
             this._character.Move(Directions.Up);
 
             Assert.IsTrue( this._character.Jump);
-        } 
+        }
+        /// <summary>
+        /// We not click to squat, value must be false
+        /// </summary>
         [TestMethod]
         public void TestSquatFail()
         {
             Assert.IsFalse(this._character.Squat);
-        }
+        }/// <summary>
+         /// We click to squat, value must be true
+         /// </summary>
         [TestMethod]
         public void TestSquatSuccess()
         {
@@ -106,23 +135,39 @@ namespace MonoGame
             Assert.IsTrue( this._character.Squat);
         }
         /// <summary>
-        /// we check if player have finished to eat
-        /// </summary>
-        [TestMethod]
-        public void TestEatFail()
-        {
-            this._character.Eat = true;
-            this._character.Eating("Banana");
-            Assert.IsFalse(this._character.Eat);
-        }
-        /// <summary>
         /// player start to eat
         /// </summary>
         [TestMethod]
-        public void TestEatSuccess()
+        public void TestEatBoolValue()
         {
-            this._character.Eat=true;
+            this._character.Eat = true;
             Assert.IsTrue(this._character.Eat);
+        }
+        /// <summary>
+        /// we check when player have finished to eat the eat value return to false
+        /// </summary>
+        [TestMethod]
+        public void TestCharacterCompletedToEat()
+        {
+            this._character.Eat = true;
+            this._character.Eating(new Food("Apple", new Location()));
+            Assert.IsFalse(this._character.Eat);
+        }
+        /// <summary>
+        /// we check when player have finished to eat the eat value return to false
+        /// </summary>
+        [TestMethod]
+        public void TestCharacterRegenerateHealthAfterEat()
+        {
+            Food Steak = new Food("Steak", new Location(), new Effect(Type.Regeneration, "Health"));
+            this._character.CurrentHealth -= 100;
+
+            this._character.Eat = true;
+            this._character.Eating(Steak);
+
+            int expected = _maxHealth;
+            Assert.AreEqual(expected, this._character.CurrentHealth);
+            
         }
         /// <summary>
         /// character can only up it we click for jump
@@ -135,13 +180,10 @@ namespace MonoGame
             //jump ended
             Assert.IsFalse(_character.Jump);
         }
-        [TestMethod]
-        public void TestSquating()
-        {
-            _character.Squating();
-
-            Assert.IsTrue(_character.Squat);
-        }
+        /// <summary>
+        /// after squating, we want get up.
+        /// squat value must be false
+        /// </summary>
         [TestMethod]
         public void TestGetUp()
         {
@@ -149,12 +191,6 @@ namespace MonoGame
             _character.GetUp();
 
             Assert.IsFalse(_character.Squat);
-        }
-        [TestMethod]
-        public void TestEndEating()
-        {
-            _character.Eating("Apple");
-            Assert.IsFalse(_character.Eat);
         }
     }
 }
