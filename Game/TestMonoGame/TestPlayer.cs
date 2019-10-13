@@ -38,33 +38,5 @@ namespace MonoGame
             int currentMana = 10;
             Assert.AreEqual(currentMana, _player.CurrentMana);
         }
-        [TestMethod]
-        public void TestEndJumping()
-        {
-            _player.Jumping();
-
-            Assert.IsFalse(_player.Jump);
-        }
-        [TestMethod]
-        public void TestSquating()
-        {
-            _player.Squating();
-
-            Assert.IsTrue(_player.Squat);
-        }
-        [TestMethod]
-        public void TestGetUp()
-        {
-            _player.Squating();
-            _player.GetUp();
-
-            Assert.IsFalse(_player.Squat);
-        }
-        [TestMethod]
-        public void TestEndEating()
-        {
-            _player.Eating("Apple");
-            Assert.IsFalse(_player.Eat);
-        }
     }
 }

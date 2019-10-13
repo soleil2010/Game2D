@@ -30,11 +30,19 @@ namespace MonoGame
             this._character.Speed = this._speed;
             this._character.Location = new Location(_posX,0);
         }
+        /// <summary>
+        /// we test the maximal life
+        /// of our character
+        /// </summary>
         [TestMethod]
         public void TestMaxHealth()
         {
             Assert.AreEqual(this._maxHealth, this._character.MaxHealth);
         }
+        /// <summary>
+        /// we check the current life of player
+        /// after initialization
+        /// </summary>
         [TestMethod]
         public void TestCurrentHealth()
         {
@@ -98,16 +106,56 @@ namespace MonoGame
             this._character.Move(Directions.Down);
             Assert.IsTrue( this._character.Squat);
         }
+        /// <summary>
+        /// we check if player have finished to eat
+        /// </summary>
         [TestMethod]
         public void TestEatFail()
         {
+            this._character.Eat = true;
+            this._character.Eating("Banana");
             Assert.IsFalse(this._character.Eat);
         }
+        /// <summary>
+        /// player start to eat
+        /// </summary>
         [TestMethod]
         public void TestEatSuccess()
         {
             this._character.Eat=true;
             Assert.IsTrue(this._character.Eat);
+        }
+        /// <summary>
+        /// character can only up it we click for jump
+        /// </summary>
+        [TestMethod]
+        public void TestEndJumping()
+        {
+            _character.Move(Directions.Up);//simule our click to jump
+            _character.Jumping();//currently jump
+            //jump ended
+            Assert.IsFalse(_character.Jump);
+        }
+        [TestMethod]
+        public void TestSquating()
+        {
+            _character.Squating();
+
+            Assert.IsTrue(_character.Squat);
+        }
+        [TestMethod]
+        public void TestGetUp()
+        {
+            _character.Squating();
+            _character.GetUp();
+
+            Assert.IsFalse(_character.Squat);
+        }
+        [TestMethod]
+        public void TestEndEating()
+        {
+            _character.Eating("Apple");
+            Assert.IsFalse(_character.Eat);
         }
     }
 }
