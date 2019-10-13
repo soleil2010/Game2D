@@ -42,9 +42,10 @@ namespace MonoGame
             }
         }
 
-        public void FleeDirection(Directions direction)
+        public void AvoidObject()
         {
-
+            int monsterLocationX = this.Location.X;
+            int monsterLocationY = this.Location.Y;
         }
         #endregion Methods
 

@@ -77,6 +77,7 @@ namespace MonoGame
         #endregion Public methods
 
         #region Private methods
+
         #endregion Private methods
 
         #region Accessors
