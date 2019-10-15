@@ -20,8 +20,7 @@ namespace MonoGame
         /// <param name="location">where is its location</param>
         public Food(string name, Location location, Effect effect=null):base(name,location)
         {
-            _effect = effect;
-            
+            _effect = effect;            
         }
         #endregion constructors
 

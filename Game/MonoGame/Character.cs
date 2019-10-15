@@ -106,7 +106,21 @@ namespace MonoGame
             {
                 if(food.Effect!=null)
                 {
-                    switch(food.Effect.Type)
+                    switch (food.Effect)
+                    {
+                        case EffectRegeneration Regeneration:
+                            // Regeneration.Regeneration(value => this.CurrentHealth += value, 100, 2);
+                            Character character = this;
+                            var me = this;
+                            Regeneration.RegenerationHealth(ref me);
+                            break;
+                        case EffectSickness sickness:
+                            //sickness.Sickness();
+                            break;
+                    }
+
+                    /*
+                    switch(food.Effect)
                     {
                         case Type.Regeneration:
                             food.Effect.Regeneration(value => this.CurrentHealth += value, 100, 2);
@@ -115,7 +129,7 @@ namespace MonoGame
                             break;
                         case Type.Sickness:
                             break;
-                    }
+                    }*/
                 }
                 this.Eat = false;
             }
@@ -123,6 +137,19 @@ namespace MonoGame
         #endregion Public methods
 
         #region Private methods
+        private void Regeneration(Action<int> actualValue, int valueToGive, int seconds = 1)
+        {
+            //we split value for give equivalent value after x time
+            if (seconds != 0)
+                valueToGive = Convert.ToInt32(Math.Round((valueToGive / (float)seconds), MidpointRounding.AwayFromZero));
+
+            for (int i = 0; i < seconds; i++)
+            {
+                actualValue(valueToGive);
+                if (seconds > 1)
+                    System.Threading.Thread.Sleep(1000);
+            }
+        }
         #endregion Private methods
 
         #region Accessors

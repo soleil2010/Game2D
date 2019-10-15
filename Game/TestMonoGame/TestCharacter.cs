@@ -159,11 +159,15 @@ namespace MonoGame
         [TestMethod]
         public void TestCharacterRegenerateHealthAfterEat()
         {
-            Food Steak = new Food("Steak", new Location(), new Effect(Type.Regeneration, "Health"));
+            Food Steak = new Food("Steak", new Location(), new EffectRegeneration(Regeneration.Mana,100));
+            Food Pomme = new Food("Pomme", new Location(), new EffectSickness(Sickness.Confused));
+            
             this._character.CurrentHealth -= 100;
 
             this._character.Eat = true;
             this._character.Eating(Steak);
+            this._character.Eat = true;
+            this._character.Eating(Pomme);
 
             int expected = _maxHealth;
             Assert.AreEqual(expected, this._character.CurrentHealth);

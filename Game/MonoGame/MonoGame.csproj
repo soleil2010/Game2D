@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="EffectRegeneration.cs" />
+    <Compile Include="EffectSickness.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Object.cs" />
