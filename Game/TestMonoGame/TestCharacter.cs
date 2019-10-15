@@ -22,7 +22,7 @@ namespace MonoGame
         {
             this._maxHealth = 100;
             this._posX = 10;
-            this._speed = 5;
+            this._speed = 1;
             this._resistance = 0;
             this._defense = 10;
             this._damages = 10;
@@ -156,6 +156,22 @@ namespace MonoGame
         {
             _character.Eating("Apple");
             Assert.IsFalse(_character.Eat);
+        }
+
+        [TestMethod]
+        public void TestMovementRight()
+        {
+            this._character.Location.X = 0;
+            this._character.Movement(Directions.Right);
+            Assert.AreEqual(16, this._character.Location.X);
+        }
+
+        [TestMethod]
+        public void TestMovementLeft()
+        {
+            this._character.Location.X = 0;
+            this._character.Movement(Directions.Left);
+            Assert.AreEqual(-16, this._character.Location.X);
         }
     }
 }

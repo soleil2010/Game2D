@@ -24,6 +24,7 @@ namespace MonoGame
         private bool _squat;
         private bool _jump;
         private bool _eat;
+        private bool _onGround;
         #endregion Private attributes
 
         #region Constructor
@@ -115,10 +116,47 @@ namespace MonoGame
             Console.WriteLine("Its was good!");
             this._eat = false;
         }
+        /// <summary>
+        /// Make the character move to 16 px whenever this method is called
+        /// The speed define how fast the character make this action.
+        /// Exemple:
+        /// (Speed = 1) = walk
+        /// (Speed = 2) = run
+        /// </summary>
+        /// <param name="direction"></param>
+        public void Movement(Directions direction)
+        {
+            if (direction == Directions.Right && this._onGround)
+            {
+
+                    this._location.X += this._speed;
+
+            }
+            if (direction == Directions.Left && this._onGround)
+            {
+
+                    this._location.X -= this._speed;
+
+            }
+        }
+
+        public void Jumpment(Directions direction)
+        {
+
+        }
         #endregion Public methods
 
         #region Private methods
-
+        private void OnGround(Monster monster)
+        {
+            int _locationCharacter = this._location.Y;
+            int _locationGround = monster.Location.Y;
+            if (this.Location.Y == monster.Location.Y)
+            {
+                 _onGround = true;
+            }
+             _onGround = false;
+        }
         #endregion Private methods
 
         #region Accessors
