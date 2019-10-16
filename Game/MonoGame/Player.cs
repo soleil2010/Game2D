@@ -37,29 +37,32 @@ namespace MonoGame
         /// player can regenerate mana
         /// </summary>
         /// <param name="food">what food are you eating?</param>
-        public void Eating(Food food)
+        public bool Eating(Food food)
         {
-            base.Eating(food);
-            if (this.Eat)
+            if (base.Eating(food))
             {
-                if (food.Effect != null)
+                this.Eat = true;
+                if (this.Eat)
                 {
-                    //we look effect on our food and active this.
-                    switch (food.Effect)
+                    if (food.Effect != null)
                     {
-                        case RegenerationEffect Regeneration:
-                            //food with mana effect regenerate the mana of player
-                            if (Regeneration.regenerationType == RegenerationType.Mana)
-                            {
-                                Regeneration.RegenerationMana(this);
-                            }
-                            break;
+                        //we look effect on our food and active this.
+                        switch (food.Effect)
+                        {
+                            case RegenerationEffect regeneration:
+                                //food with mana effect regenerate the mana of player
+                                if (regeneration.regenerationType == RegenerationType.Mana)
+                                {
+                                    regeneration.RegenerationMana(this);
+                                }
+                                break;
+                        }
                     }
+                    this.Eat = false;
+                    return true;
                 }
-                else
-                    base.Eating(food);
-                this.Eat = false;
             }
+            return false;
         }
         #endregion Public methods
 

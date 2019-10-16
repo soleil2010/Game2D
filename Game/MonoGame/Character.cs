@@ -100,7 +100,7 @@ namespace MonoGame
         /// When player eat, receive a specific effect
         /// </summary>
         /// <param name="food">what food are you eating?</param>
-        public void Eating(Food food)
+        public bool Eating(Food food)
         {
            if(this.Eat)
             {
@@ -123,7 +123,9 @@ namespace MonoGame
                     }
                 }
                 this.Eat = false;
+                return true;
             }
+            return false;
         }
         #endregion Public methods
 
