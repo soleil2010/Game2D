@@ -39,6 +39,7 @@ namespace MonoGame
         /// <param name="food">what food are you eating?</param>
         public void Eating(Food food)
         {
+            base.Eating(food);
             if (this.Eat)
             {
                 if (food.Effect != null)
@@ -55,6 +56,8 @@ namespace MonoGame
                             break;
                     }
                 }
+                else
+                    base.Eating(food);
                 this.Eat = false;
             }
         }
