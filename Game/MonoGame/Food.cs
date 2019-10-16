@@ -31,6 +31,9 @@ namespace MonoGame
         #endregion public methods
 
         #region accessors and mutators
+        /// <summary>
+        /// return the effect on our food
+        /// </summary>
         public Effect Effect
         {
             get => _effect;

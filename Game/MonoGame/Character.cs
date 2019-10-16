@@ -97,39 +97,30 @@ namespace MonoGame
             }
         }
         /// <summary>
-        /// Eat to restore health
+        /// When player eat, receive a specific effect
         /// </summary>
-        /// <param name="fruit"></param>
+        /// <param name="food">what food are you eating?</param>
         public void Eating(Food food)
         {
            if(this.Eat)
             {
                 if(food.Effect!=null)
                 {
+                    //we look effect on our food and active this.
                     switch (food.Effect)
                     {
-                        case EffectRegeneration Regeneration:
-                            // Regeneration.Regeneration(value => this.CurrentHealth += value, 100, 2);
-                            Character character = this;
-                            var me = this;
-                            Regeneration.RegenerationHealth(ref me);
+                        case RegenerationEffect Regeneration:
+                            //food with health effect regenerate the life of characters
+                            if(Regeneration.regenerationType == RegenerationType.Health)
+                                Regeneration.RegenerationHealth(this);
                             break;
-                        case EffectSickness sickness:
+                        case SicknessEffect sickness:
+                            //sickness.Sickness();
+                            break;
+                        case BuffEffect buff:
                             //sickness.Sickness();
                             break;
                     }
-
-                    /*
-                    switch(food.Effect)
-                    {
-                        case Type.Regeneration:
-                            food.Effect.Regeneration(value => this.CurrentHealth += value, 100, 2);
-                            break;
-                        case Type.Buff:
-                            break;
-                        case Type.Sickness:
-                            break;
-                    }*/
                 }
                 this.Eat = false;
             }
@@ -137,19 +128,6 @@ namespace MonoGame
         #endregion Public methods
 
         #region Private methods
-        private void Regeneration(Action<int> actualValue, int valueToGive, int seconds = 1)
-        {
-            //we split value for give equivalent value after x time
-            if (seconds != 0)
-                valueToGive = Convert.ToInt32(Math.Round((valueToGive / (float)seconds), MidpointRounding.AwayFromZero));
-
-            for (int i = 0; i < seconds; i++)
-            {
-                actualValue(valueToGive);
-                if (seconds > 1)
-                    System.Threading.Thread.Sleep(1000);
-            }
-        }
         #endregion Private methods
 
         #region Accessors
@@ -164,9 +142,10 @@ namespace MonoGame
             }
             set
             {
-                this._currentHealth = value;
-                if (this._currentHealth > this._maxHealth)
+                if ( value > this._maxHealth)
                     this._currentHealth = this._maxHealth;
+                else
+                    this._currentHealth = value;
             }
         }
         /// <summary>

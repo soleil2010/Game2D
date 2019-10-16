@@ -31,5 +31,25 @@ namespace MonoGame
             string actual = _food.Name;
             Assert.AreEqual(_name, actual);
         }
+        /// <summary>
+        /// After creation of food, is the effect always the same?
+        /// </summary>
+        [TestMethod]
+        public void TestFoodRegenerationEffect()
+        {
+            RegenerationEffect effect = new RegenerationEffect(RegenerationType.Health, 20);
+            _food = new Food(_name, _location,effect);
+            Assert.AreEqual(effect,_food.Effect);
+        }
+        /// <summary>
+        /// After creation of food, is the effect always the same?
+        /// </summary>
+        [TestMethod]
+        public void TestFoodManaEffect()
+        {
+            RegenerationEffect effect = new RegenerationEffect(RegenerationType.Mana, 20);
+            _food = new Food(_name, _location,effect);
+            Assert.AreEqual(effect,_food.Effect);
+        }
     }
 }

@@ -159,19 +159,15 @@ namespace MonoGame
         [TestMethod]
         public void TestCharacterRegenerateHealthAfterEat()
         {
-            Food Steak = new Food("Steak", new Location(), new EffectRegeneration(Regeneration.Mana,100));
-            Food Pomme = new Food("Pomme", new Location(), new EffectSickness(Sickness.Confused));
+            Food Steak = new Food("Steak", new Location(), new RegenerationEffect(RegenerationType.Health,100));
             
             this._character.CurrentHealth -= 100;
 
             this._character.Eat = true;
             this._character.Eating(Steak);
-            this._character.Eat = true;
-            this._character.Eating(Pomme);
 
             int expected = _maxHealth;
             Assert.AreEqual(expected, this._character.CurrentHealth);
-            
         }
         /// <summary>
         /// character can only up it we click for jump
