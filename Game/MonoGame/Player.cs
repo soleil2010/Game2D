@@ -31,13 +31,45 @@ namespace MonoGame
         }
         #endregion Constructor
 
-        #region Public methods
+        #region Public methods 
+        /// <summary>
+        /// When player eat, receive a specific effect
+        /// player can regenerate mana
+        /// </summary>
+        /// <param name="food">what food are you eating?</param>
+        public bool Eating(Food food)
+        {
+            if (base.Eating(food))
+            {
+                this.Eat = true;
+                if (this.Eat)
+                {
+                    if (food.Effect != null)
+                    {
+                        //we look effect on our food and active this.
+                        switch (food.Effect)
+                        {
+                            case RegenerationEffect regeneration:
+                                //food with mana effect regenerate the mana of player
+                                if (regeneration.regenerationType == RegenerationType.Mana)
+                                {
+                                    regeneration.RegenerationMana(this);
+                                }
+                                break;
+                        }
+                    }
+                    this.Eat = false;
+                    return true;
+                }
+            }
+            return false;
+        }
         #endregion Public methods
 
-        #region Private methods
-        #endregion Private methods
+            #region Private methods
+            #endregion Private methods
 
-        #region Accessors
+            #region Accessors
         public int MaxMana
         {
             get
@@ -53,7 +85,10 @@ namespace MonoGame
             }
             set
             {
-                this._currentMana = value;
+                if ( value > this._maxMana)
+                    this._currentMana = this._maxMana;
+                else
+                    this._currentMana = value;
             }
         }
         #endregion Accessors

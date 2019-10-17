@@ -42,8 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
-    <Compile Include="Effects.cs" />
+    <Compile Include="Effects\BuffEffect.cs" />
+    <Compile Include="Effects\Effect.cs" />
+    <Compile Include="Effects\RegenerationEffect.cs" />
+    <Compile Include="Effects\SicknessEffect.cs" />
+    <Compile Include="Food.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="Object.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -51,9 +51,11 @@
   <ItemGroup>
     <Compile Include="TestCharacter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestEffects.cs" />
+    <Compile Include="TestEffects\TestRegenerationEffect.cs" />
+    <Compile Include="TestObject.cs" />
     <Compile Include="TestLocation.cs" />
     <Compile Include="TestPlayer.cs" />
+    <Compile Include="TestFood.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
