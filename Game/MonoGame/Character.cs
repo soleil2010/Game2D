@@ -176,6 +176,7 @@ namespace MonoGame
                 this._location.Y -= 5;
                 this._squat = true;
             }
+            else
             this._squat = false;
         }
 
