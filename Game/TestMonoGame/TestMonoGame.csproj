@@ -55,6 +55,7 @@
     <Compile Include="TestObject.cs" />
     <Compile Include="TestLocation.cs" />
     <Compile Include="TestPlayer.cs" />
+    <Compile Include="TestTerrain.cs" />
     <Compile Include="TestFood.cs" />
   </ItemGroup>
   <ItemGroup>

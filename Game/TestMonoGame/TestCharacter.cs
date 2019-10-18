@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MonoGame
@@ -14,6 +15,7 @@ namespace MonoGame
         private int _damages;
         private int _posX;
         private Character _character;
+        private Terrain _terrain;
         #endregion Private attributes
 
         [TestInitialize]
@@ -21,13 +23,14 @@ namespace MonoGame
         {
             this._maxHealth = 100;
             this._posX = 10;
-            this._speed = 5;
+            this._speed = 1;
             this._resistance = 0;
             this._defense = 10;
             this._damages = 10;
             this._character = new Character(_maxHealth, _speed,_defense,_resistance,_damages);
             this._character.Speed = this._speed;
             this._character.Location = new Location(_posX,0);
+            this._terrain = new Terrain(TypeTerrain.ground);
         }
         /// <summary>
         /// we test the maximal life
@@ -191,6 +194,31 @@ namespace MonoGame
             _character.GetUp();
 
             Assert.IsFalse(_character.Squat);
+        }
+
+        [TestMethod]
+        public void TestMovementRight()
+        {
+            this._character.Movement(Directions.Right);
+            this._character.Location.X = 0;
+            Assert.AreEqual(16, this._character.Location.X * 16);
+        }
+
+        public void TestMovementLeft()
+        {
+        [TestMethod]
+            this._character.Location.X = 0;
+            this._character.Movement(Directions.Left);
+            Assert.AreEqual(-16, this._character.Location.X*16);
+        }
+        [TestMethod]
+        public void TestOnGround()
+
+        {
+            this._character.Location.X = 4;
+            this._character.IsOnGround(TypeTerrain.ground, new Terrain(TypeTerrain.ground));
+            this._terrain.Location.Y = 4;
+            Assert.AreEqual(true, this._character.OnGround);
         }
     }
 }
