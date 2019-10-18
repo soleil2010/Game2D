@@ -177,7 +177,7 @@ namespace MonoGame
                 this._squat = true;
             }
             else
-            this._squat = false;
+                this._squat = false;
         }
 
         #endregion Public methods
