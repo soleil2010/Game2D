@@ -199,21 +199,21 @@ namespace MonoGame
         [TestMethod]
         public void TestMovementRight()
         {
-            this._character.Movement(Directions.Right);
             this._character.Location.X = 0;
+            this._character.Movement(Directions.Right);
             Assert.AreEqual(16, this._character.Location.X * 16);
         }
 
+        [TestMethod]
         public void TestMovementLeft()
         {
-        [TestMethod]
             this._character.Location.X = 0;
             this._character.Movement(Directions.Left);
             Assert.AreEqual(-16, this._character.Location.X*16);
         }
+
         [TestMethod]
         public void TestOnGround()
-
         {
             this._character.Location.X = 4;
             this._character.IsOnGround(TypeTerrain.ground, new Terrain(TypeTerrain.ground));
