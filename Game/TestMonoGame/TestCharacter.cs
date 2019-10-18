@@ -15,6 +15,7 @@ namespace MonoGame
         private int _damages;
         private int _posX;
         private Character _character;
+        private Terrain _terrain;
         #endregion Private attributes
 
         [TestInitialize]
@@ -29,6 +30,7 @@ namespace MonoGame
             this._character = new Character(_maxHealth, _speed,_defense,_resistance,_damages);
             this._character.Speed = this._speed;
             this._character.Location = new Location(_posX,0);
+            this._terrain = new Terrain(TypeTerrain.ground);
         }
         /// <summary>
         /// we test the maximal life
@@ -163,7 +165,7 @@ namespace MonoGame
         {
             this._character.Location.X = 0;
             this._character.Movement(Directions.Right);
-            Assert.AreEqual(16, this._character.Location.X);
+            Assert.AreEqual(16, this._character.Location.X * 16);
         }
 
         [TestMethod]
@@ -171,7 +173,16 @@ namespace MonoGame
         {
             this._character.Location.X = 0;
             this._character.Movement(Directions.Left);
-            Assert.AreEqual(-16, this._character.Location.X);
+            Assert.AreEqual(-16, this._character.Location.X*16);
+        }
+
+        [TestMethod]
+        public void TestOnGround()
+        {
+            this._character.Location.X = 4;
+            this._character.IsOnGround(TypeTerrain.ground, new Terrain(TypeTerrain.ground));
+            this._terrain.Location.Y = 4;
+            Assert.AreEqual(true, this._character.OnGround);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace MonoGame
         private bool _jump;
         private bool _eat;
         private bool _onGround;
+        private bool _isCrouch;
         #endregion Private attributes
 
         #region Constructor
@@ -126,36 +127,72 @@ namespace MonoGame
         /// <param name="direction"></param>
         public void Movement(Directions direction)
         {
-            if (direction == Directions.Right && this._onGround)
+            if (direction == Directions.Right)
             {
 
                     this._location.X += this._speed;
 
             }
-            if (direction == Directions.Left && this._onGround)
+            if (direction == Directions.Left)
             {
 
                     this._location.X -= this._speed;
 
             }
         }
-
+        /// <summary>
+        /// How to jump
+        /// </summary>
+        /// <param name="direction"></param>
         public void Jumpment(Directions direction)
         {
+            if (direction == Directions.Up && this._onGround)
+            {
 
+                this._location.Y += 5 * this._speed;
+
+            }
         }
+        /// <summary>
+        /// How to squat
+        /// </summary>
+        /// <param name="direction"></param>
+        public void Squattingment(Directions direction)
+        {
+            if(direction == Directions.Down && this._onGround && !this._squat)
+            {
+                this._location.Y -= 5;
+                this._squat = true;
+            }
+            this._squat = false;
+        }
+
         #endregion Public methods
 
         #region Private methods
-        private void OnGround(Monster monster)
+        public void IsOnGround(TypeTerrain typeTerrain, Terrain terrain)
         {
-            int _locationCharacter = this._location.Y;
-            int _locationGround = monster.Location.Y;
-            if (this.Location.Y == monster.Location.Y)
+            switch (typeTerrain)
             {
-                 _onGround = true;
+                case TypeTerrain.ground:
+                    if (this._location.Y == terrain.Location.Y)
+                    {
+                        _onGround = true;
+                    }
+                    else
+                        _onGround = false;
+                    break;
+                case TypeTerrain.roof:
+                    _onGround = false;
+                    break;
+                case TypeTerrain.wall:
+                    _onGround = false;
+                    break;
+                case TypeTerrain.plateform:
+                    _onGround = false;
+                    break;
             }
-             _onGround = false;
+                
         }
         #endregion Private methods
 
@@ -281,6 +318,14 @@ namespace MonoGame
             set
             {
                 this._eat = value;
+            }
+        }
+
+        public bool OnGround
+        {
+            get
+            {
+                return this._onGround;
             }
         }
         /// <summary>

@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 namespace MonoGame
 {
     public enum TypeTerrain { ground, roof, wall, plateform }
-    class Terrain
+    public class Terrain
     {
-        #region Attributes
+        #region Private attributes
         private bool _ground;
         private bool _roof;
         private bool _wall;
         private bool _plateform;
-        #endregion Attributes
+        private Location _location;
+        #endregion Private attributes
 
         #region Constructor
         /// <summary>
         /// Construct the object Terrain
-        /// Ein terrain Ein Affectation
+        /// Ein terrain Ein Type
         /// </summary>
         /// <param name="ground"></param>
         /// <param name="roof"></param>
@@ -42,6 +43,8 @@ namespace MonoGame
                     this._plateform = true;
                     break;
             }
+
+            this._location = new Location();
         }
         #endregion Constructor
 
@@ -81,6 +84,18 @@ namespace MonoGame
             get
             {
                 return this._plateform;
+            }
+        }
+
+        public Location Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+                this._location = value;
             }
         }
         #endregion Accessors
