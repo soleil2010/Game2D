@@ -17,10 +17,14 @@ namespace Monogame
         Sprite sprite;
         Texture2D spriteTexture2D;
 
+        const float gravity = 9.81f;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
         }
 
         /// <summary>
@@ -73,9 +77,9 @@ namespace Monogame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            sprite.Velocity.Y += sprite.Speed;
             // TODO: Add your update logic here
-            sprite.update();
+            sprite.Update();
             sprite.Position = new Vector2  (Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture2D.Width),
                                             Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture2D.Height));
             base.Update(gameTime);
