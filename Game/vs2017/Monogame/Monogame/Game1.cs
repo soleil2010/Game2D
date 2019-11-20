@@ -17,8 +17,6 @@ namespace Monogame
         Sprite sprite;
         Texture2D spriteTexture2D;
 
-        const float gravity = 9.81f;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -56,6 +54,7 @@ namespace Monogame
             sprite.Input.Down = Keys.S;
             sprite.Input.Left = Keys.A;
             sprite.Input.Right = Keys.D;
+            sprite.Input.Jump = Keys.Space;
 
         }
 

@@ -16,7 +16,12 @@ namespace Monogame.Sprites
     public class Sprite
     {
         #region properties
+        protected bool _jump;
+        protected bool _jumped = false;
+        private float _jumpPosMax;
+        private float _jumpPosMin;
         protected Animation _animation;
+        protected Dictionary<string, Animation> _animations;
 
         // position of sprite
         protected Vector2 _position;
@@ -53,6 +58,10 @@ namespace Monogame.Sprites
         #endregion properties
 
         #region Methods
+        public Sprite(Dictionary<string, Animation> animations)
+        {
+            _animations = animations;
+        }
         public Sprite(Texture2D texture)
         {
             _texture = texture;
@@ -70,22 +79,54 @@ namespace Monogame.Sprites
         /// </summary>
         protected virtual void Move()
         {
-            if (Keyboard.GetState().IsKeyDown(Input.Up))
-                Velocity.Y += -Speed;
+            if (Keyboard.GetState().IsKeyDown(Input.Up) && !_jump)
+                Velocity.Y += -Speed*2;
             if (Keyboard.GetState().IsKeyDown(Input.Down))
                 Velocity.Y += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Left))
                 Velocity.X += -Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Right))
                 Velocity.X += Speed;
+            if (Keyboard.GetState().IsKeyDown(Input.Jump) && !_jump)
+            {
+                _jump = true;
+                _jumpPosMax = Position.Y - this._texture.Height/2;
+                _jumpPosMin = Position.Y;
+                if (_jumpPosMax < 0)
+                    _jumpPosMax = 0;
+            }
         }
+        /// <summary>
+        /// sprite up until middle of height and fall 
+        /// before to allow another jump (same position than before the jump)
+        /// </summary>
+        protected virtual void Jump()
+        {
+            if (_jump)
+            {
+                if (_jumpPosMax < Position.Y && !_jumped)
+                {
+                    Velocity.Y -= Speed*2;
+                }
+                else
+                {
+                    _jumped = true;
+                    if (Position.Y >= _jumpPosMin)
+                    {
+                        _jump = false;
+                        _jumped = false;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// method used to update data of sprite
         /// </summary>
         public virtual void Update()
         {
             Move();
-
+            Jump();
             Position += Velocity;
             Velocity = Vector2.Zero;
         }
