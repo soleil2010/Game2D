@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Monogame.Manages;
 using Monogame.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Monogame.Sprites
         #region properties
         protected bool _jump;
         protected Animation _animation;
+        protected AnimationManager _animationManager;
         protected Dictionary<string, Animation> _animations;
 
         // position of sprite
@@ -120,7 +122,23 @@ namespace Monogame.Sprites
                 _jump = false;
             }
         }
-
+        /// <summary>
+        /// Set the animation depending of the behaviour of our character
+        /// </summary>
+        /*
+        protected virtual void SetAnimations()
+        {
+            if (Velocity.X > 0)
+                _animationManager.Play(_animation["WalkRight"]);
+            else if (Velocity.X < 0)
+                _animationManager.Play(_animation["WalkLeft"]);
+            else if (Velocity.Y > 0)
+                _animationManager.Play(_animation["WalkDown"]);
+            else if (Velocity.Y < 0)
+                _animationManager.Play(_animation["WalkUp"]);
+            else _animationManager.Stop();
+        }
+        */
         /// <summary>
         /// method used to update data of sprite
         /// </summary>
@@ -132,6 +150,19 @@ namespace Monogame.Sprites
             Velocity = Vector2.Zero;
         }
         #endregion Methods
+
+        #region Accessors
+        /// <summary>
+        /// allow use to know the current state of the animation manager
+        /// </summary>
+        public AnimationManager AnimationManager
+        {
+            get
+            {
+                return this._animationManager;
+            }
+        }
+        #endregion Accessors
 
     }
 }

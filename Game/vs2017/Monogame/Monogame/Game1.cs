@@ -21,6 +21,8 @@ namespace Monogame
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1900;
+            graphics.PreferredBackBufferHeight = 1050;
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
         }

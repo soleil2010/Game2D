@@ -44,7 +44,7 @@ namespace Monogame.Models
         /// </summary>
         public Texture2D Texture { get; private set; }
         /// <summary>
-        /// 
+        /// Define the number of frame in our image
         /// </summary>
         /// <param name="texture">big picture with multiple images to generate an mouvement</param>
         /// <param name="frameCount">how many frames do you have for specific mouvements</param>
