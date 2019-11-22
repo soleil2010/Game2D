@@ -14,47 +14,45 @@ namespace Monogame.Sprites
     {
 
         #region properties
+        private bool _jumped = false;
         private float _jumpPosMax;
         private float _jumpPosMin;
-
-
-        public Texture2D Texture2D
-        {
-            get => _texture;
-        }
         #endregion properties
 
         #region Methods
-        public Character(Dictionary<string, Animation> animations):base(animations)
-        {
-            this._animations = animations;
-        }
-        public Character(Texture2D texture):base(texture)
-        {
-            this._texture = texture;
-        }
-
+        /// <summary>
+        /// Constructor with multiples sprites
+        /// </summary>
+        /// <param name="animations">sprite with specific mouvement</param>
+        /// <example>we want add sprite of right walk with 3 frames --> animations.Add("WalkRight", new Animation(Content.Load<Texture2D>("Character/WalkRight"), 3))</example>
+        public Character(Dictionary<string, Animation> animations) : base(animations){ }
+        /// <summary>
+        /// constructor with a simple sprite
+        /// </summary>
+        /// <param name="texture">picture</param>
+        /// <example>new Character(Content.Load<Texture2D>("staticCharacter"))</example>
+        public Character(Texture2D texture) : base(texture){ }
 
         /// <summary>
         /// modify the velocity of sprite in terms of keys
         /// </summary>
         protected override void Move()
         {
-            if (Keyboard.GetState().IsKeyDown(Input.Up) && !this._jump)
+            if (Keyboard.GetState().IsKeyDown(this.Input.Up) && !this._jump)
                 this.Velocity.Y += -this.Speed * 2;
-            if (Keyboard.GetState().IsKeyDown(Input.Down))
+            if (Keyboard.GetState().IsKeyDown(this.Input.Down))
                 this.Velocity.Y += this.Speed;
-            if (Keyboard.GetState().IsKeyDown(Input.Left))
+            if (Keyboard.GetState().IsKeyDown(this.Input.Left))
                 this.Velocity.X += -this.Speed;
-            if (Keyboard.GetState().IsKeyDown(Input.Right))
+            if (Keyboard.GetState().IsKeyDown(this.Input.Right))
                 this.Velocity.X += this.Speed;
-            if (Keyboard.GetState().IsKeyDown(Input.Jump) && !_jump)
+            if (Keyboard.GetState().IsKeyDown(this.Input.Jump) && !this._jump)
             {
                 this._jump = true;
                 this._jumpPosMax = this.Position.Y - this._texture.Height/2;
                 this._jumpPosMin = this.Position.Y;
-                if (_jumpPosMax < 0)
-                    _jumpPosMax = 0;
+                if (this._jumpPosMax < 0)
+                    this._jumpPosMax = 0;
             }
         }
         /// <summary>
@@ -65,7 +63,6 @@ namespace Monogame.Sprites
         {
             if (this._jump)
             {
-                this._jump = false;
                 if (this._jumpPosMax < this.Position.Y && !this._jumped)
                 {
                     this.Velocity.Y -= this.Speed *2;
