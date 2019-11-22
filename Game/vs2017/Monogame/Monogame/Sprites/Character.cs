@@ -43,9 +43,15 @@ namespace Monogame.Sprites
             if (Keyboard.GetState().IsKeyDown(this.Input.Down))
                 this.Velocity.Y += this.Speed;
             if (Keyboard.GetState().IsKeyDown(this.Input.Left))
-                this.Velocity.X += -this.Speed;
+                if (Keyboard.GetState().IsKeyDown(this.Input.Sprint))
+                    this.Velocity.X += -this.Speed * 2;
+                else
+                    this.Velocity.X += -this.Speed;
             if (Keyboard.GetState().IsKeyDown(this.Input.Right))
-                this.Velocity.X += this.Speed;
+                if (Keyboard.GetState().IsKeyDown(this.Input.Sprint))
+                    this.Velocity.X += this.Speed * 2;
+                else
+                    this.Velocity.X += this.Speed;
             if (Keyboard.GetState().IsKeyDown(this.Input.Jump) && !this._jump)
             {
                 this._jump = true;

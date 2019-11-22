@@ -14,5 +14,6 @@ namespace Monogame.Models
         public Keys Down { get; set; }
         public Keys Right { get; set; }
         public Keys Jump { get; set; }
+        public Keys Sprint { get; set; }
     }
 }

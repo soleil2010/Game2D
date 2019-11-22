@@ -55,6 +55,7 @@ namespace Monogame
             sprite.Input.Left = Keys.A;
             sprite.Input.Right = Keys.D;
             sprite.Input.Jump = Keys.Space;
+            sprite.Input.Sprint = Keys.LeftShift;
 
             // TODO: use this.Content to load your game content here
             
@@ -65,6 +66,7 @@ namespace Monogame
             character.Input.Left = Keys.Left;
             character.Input.Right = Keys.Right;
             character.Input.Jump = Keys.RightShift;
+            character.Input.Sprint = Keys.RightControl;
 
         }
 
