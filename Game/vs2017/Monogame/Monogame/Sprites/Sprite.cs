@@ -17,9 +17,6 @@ namespace Monogame.Sprites
     {
         #region properties
         protected bool _jump;
-        protected bool _jumped = false;
-        private float _jumpPosMax;
-        private float _jumpPosMin;
         protected Animation _animation;
         protected Dictionary<string, Animation> _animations;
 
@@ -50,7 +47,9 @@ namespace Monogame.Sprites
             get => _position;
             set => _position = value;
         }
-
+        /// <summary>
+        /// get the sprite skin
+        /// </summary>
         public Texture2D Texture2D
         {
             get => _texture;
@@ -58,15 +57,28 @@ namespace Monogame.Sprites
         #endregion properties
 
         #region Methods
+        /// <summary>
+        /// Constructor with multiples sprites(picture with multiple images to generate an mouvement)
+        /// </summary>
+        /// <param name="animations">sprite with specific mouvement</param>
+        /// <example>we want add sprite of right walk with 3 frames --> animations.Add("WalkRight", new Animation(Content.Load<Texture2D>("Character/WalkRight"), 3))</example>
         public Sprite(Dictionary<string, Animation> animations)
         {
             _animations = animations;
         }
+        /// <summary>
+        /// constructor with a simple sprite
+        /// </summary>
+        /// <param name="texture">picture</param>
+        /// <example>new Character(Content.Load<Texture2D>("staticCharacter"))</example>
         public Sprite(Texture2D texture)
         {
             _texture = texture;
         }
-
+        /// <summary>
+        /// draw on screen our sprite with specific texture and position
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (_texture != null)
@@ -84,39 +96,28 @@ namespace Monogame.Sprites
             if (Keyboard.GetState().IsKeyDown(Input.Down))
                 Velocity.Y += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Left))
-                Velocity.X += -Speed;
+                if (Keyboard.GetState().IsKeyDown(Input.Sprint))
+                    Velocity.X += -Speed * 2;
+                else
+                    Velocity.X += -Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Right))
-                Velocity.X += Speed;
+                if (Keyboard.GetState().IsKeyDown(Input.Sprint))
+                    Velocity.X += Speed * 2;
+                else
+                    Velocity.X += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Jump) && !_jump)
             {
                 _jump = true;
-                _jumpPosMax = Position.Y - this._texture.Height/2;
-                _jumpPosMin = Position.Y;
-                if (_jumpPosMax < 0)
-                    _jumpPosMax = 0;
             }
         }
         /// <summary>
-        /// sprite up until middle of height and fall 
-        /// before to allow another jump (same position than before the jump)
+        /// when jump, disable the jump
         /// </summary>
         protected virtual void Jump()
         {
             if (_jump)
             {
-                if (_jumpPosMax < Position.Y && !_jumped)
-                {
-                    Velocity.Y -= Speed*2;
-                }
-                else
-                {
-                    _jumped = true;
-                    if (Position.Y >= _jumpPosMin)
-                    {
-                        _jump = false;
-                        _jumped = false;
-                    }
-                }
+                _jump = false;
             }
         }
 

@@ -15,12 +15,12 @@ namespace Monogame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
+        Character character;
         Texture2D spriteTexture2D;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
         }
@@ -55,6 +55,18 @@ namespace Monogame
             sprite.Input.Left = Keys.A;
             sprite.Input.Right = Keys.D;
             sprite.Input.Jump = Keys.Space;
+            sprite.Input.Sprint = Keys.LeftShift;
+
+            // TODO: use this.Content to load your game content here
+            
+            character = new Character(Content.Load<Texture2D>("teste"));
+            character.Input = new Input();
+            character.Input.Up = Keys.Up;
+            character.Input.Down = Keys.Down;
+            character.Input.Left = Keys.Left;
+            character.Input.Right = Keys.Right;
+            character.Input.Jump = Keys.RightShift;
+            character.Input.Sprint = Keys.RightControl;
 
         }
 
@@ -81,6 +93,11 @@ namespace Monogame
             sprite.Update();
             sprite.Position = new Vector2  (Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture2D.Width),
                                             Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture2D.Height));
+            character.Velocity.Y += character.Speed;
+            // TODO: Add your update logic here
+            character.Update();
+            character.Position = new Vector2  (Math.Min(Math.Max(0, character.Position.X), graphics.PreferredBackBufferWidth - character.Texture2D.Width),
+                                                Math.Min(Math.Max(0, character.Position.Y), graphics.PreferredBackBufferHeight - character.Texture2D.Height));
             base.Update(gameTime);
         }
 
@@ -94,6 +111,7 @@ namespace Monogame
             spriteBatch.Begin();
             // TODO: Add your drawing code here
             sprite.Draw(spriteBatch);
+            character.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
