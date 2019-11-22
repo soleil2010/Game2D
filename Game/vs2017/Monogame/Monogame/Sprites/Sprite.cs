@@ -18,8 +18,6 @@ namespace Monogame.Sprites
         #region properties
         protected bool _jump;
         protected bool _jumped = false;
-        private float _jumpPosMax;
-        private float _jumpPosMin;
         protected Animation _animation;
         protected Dictionary<string, Animation> _animations;
 
@@ -90,10 +88,6 @@ namespace Monogame.Sprites
             if (Keyboard.GetState().IsKeyDown(Input.Jump) && !_jump)
             {
                 _jump = true;
-                _jumpPosMax = Position.Y - this._texture.Height/2;
-                _jumpPosMin = Position.Y;
-                if (_jumpPosMax < 0)
-                    _jumpPosMax = 0;
             }
         }
         /// <summary>
@@ -104,19 +98,7 @@ namespace Monogame.Sprites
         {
             if (_jump)
             {
-                if (_jumpPosMax < Position.Y && !_jumped)
-                {
-                    Velocity.Y -= Speed*2;
-                }
-                else
-                {
-                    _jumped = true;
-                    if (Position.Y >= _jumpPosMin)
-                    {
-                        _jump = false;
-                        _jumped = false;
-                    }
-                }
+                _jump = false;
             }
         }
 
