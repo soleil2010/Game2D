@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Monogame.Models;
 using Monogame.Sprites;
 using System;
+using System.Collections.Generic;
 
 namespace Monogame
 {
@@ -21,8 +22,8 @@ namespace Monogame
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1900;
-            graphics.PreferredBackBufferHeight = 1050;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.PreferredBackBufferWidth = 900;
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
         }
@@ -50,18 +51,24 @@ namespace Monogame
 
             // TODO: use this.Content to load your game content here
             spriteTexture2D = Content.Load<Texture2D>("teste");
+            sprite = new Character(spriteTexture2D);
             sprite = new Sprite(spriteTexture2D);
             sprite.Input = new Input();
             sprite.Input.Up = Keys.W;
             sprite.Input.Down = Keys.S;
             sprite.Input.Left = Keys.A;
             sprite.Input.Right = Keys.D;
-            sprite.Input.Jump = Keys.Space;
             sprite.Input.Sprint = Keys.LeftShift;
+            sprite.Input.Jump = Keys.Space;
 
             // TODO: use this.Content to load your game content here
-            
-            character = new Character(Content.Load<Texture2D>("teste"));
+            var animations = new Dictionary<string, Animation>();
+            animations.Add("WalkUp", new Animation(Content.Load<Texture2D>("stop"), 17) { FrameSpeed = 0 }) ;
+            animations.Add("WalkDown", new Animation(Content.Load<Texture2D>("stop"), 17) { FrameSpeed = 0 }) ;
+            animations.Add("WalkRight", new Animation(Content.Load<Texture2D>("WalkRight"), 1) { FrameSpeed = 0 }) ;
+            animations.Add("WalkLeft", new Animation(Content.Load<Texture2D>("stop"), 17) { FrameSpeed = 0f }) ;
+            character = new Character(animations);
+            character.Speed = 1.2f;
             character.Input = new Input();
             character.Input.Up = Keys.Up;
             character.Input.Down = Keys.Down;
@@ -92,14 +99,15 @@ namespace Monogame
                 Exit();
             sprite.Velocity.Y += sprite.Speed;
             // TODO: Add your update logic here
-            sprite.Update();
+            sprite.Update(gameTime);
             sprite.Position = new Vector2  (Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture2D.Width),
                                             Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture2D.Height));
-            character.Velocity.Y += character.Speed;
+
             // TODO: Add your update logic here
-            character.Update();
-            character.Position = new Vector2  (Math.Min(Math.Max(0, character.Position.X), graphics.PreferredBackBufferWidth - character.Texture2D.Width),
-                                                Math.Min(Math.Max(0, character.Position.Y), graphics.PreferredBackBufferHeight - character.Texture2D.Height));
+            //character.Velocity.Y += character.Speed;
+            character.Update(gameTime);
+            character.Position = new Vector2  (Math.Min(Math.Max(0, character.Position.X), graphics.PreferredBackBufferWidth - character.AnimationManager.Animation.FrameWidth),
+                                                Math.Min(Math.Max(0, character.Position.Y), graphics.PreferredBackBufferHeight - character.AnimationManager.Animation.FrameHeight));
             base.Update(gameTime);
         }
 

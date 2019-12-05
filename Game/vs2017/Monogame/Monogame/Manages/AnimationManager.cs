@@ -67,7 +67,6 @@ namespace Monogame.Manages
         public void Stop()
         {
             _timer = 0;
-
             _animation.CurrentFrame = 0;
         }
         /// <summary>
@@ -77,7 +76,6 @@ namespace Monogame.Manages
         public void Update(GameTime gameTime)
         {
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             if (_timer > _animation.FrameSpeed)
             {
                 _timer = 0f;
@@ -97,10 +95,7 @@ namespace Monogame.Manages
         #region Accessors
         public Animation Animation
         {
-            get
-            {
-                return this._animation;
-            }
+            get => this._animation;         
         }
         #endregion Accessors
     }

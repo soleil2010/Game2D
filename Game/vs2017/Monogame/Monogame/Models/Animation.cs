@@ -29,15 +29,15 @@ namespace Monogame.Models
         /// <summary>
         /// what's the speed to change between frames
         /// </summary>
-        public float FrameSpeed { get; private set; }
+        public float FrameSpeed { get; set; }
         /// <summary>
         /// get the height size of big image
         /// </summary>
-        public int FrameHeight { get { return Texture.Height; } }
+        public int FrameHeight { get => Texture.Height; }
         /// <summary>
         /// get the size of each picture(frame) in big image
         /// </summary>
-        public int FrameWidth { get { return Texture.Width / FrameCount; } }
+        public int FrameWidth { get => Texture.Width / FrameCount;  }
         #endregion properties
         /// <summary>
         /// get the big picture with all frames
