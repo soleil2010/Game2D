@@ -55,7 +55,10 @@ namespace Monogame.Sprites
             if (Keyboard.GetState().IsKeyDown(this.Input.Jump) && !this._jump)
             {
                 this._jump = true;
-                this._jumpPosMax = this.Position.Y - this._texture.Height/2;
+                if (_animationManager != null)
+                    this._jumpPosMax = this.Position.Y - this._animationManager.Animation.FrameHeight / 2;
+                else
+                    this._jumpPosMax = this.Position.Y - this._texture.Height / 2;
                 this._jumpPosMin = this.Position.Y;
                 if (this._jumpPosMax < 0)
                     this._jumpPosMax = 0;
@@ -82,6 +85,26 @@ namespace Monogame.Sprites
                         this._jumped = false;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Set the animation depending of the behaviour of our character
+        /// </summary>        
+        protected override void SetAnimations()
+        {
+            if (_animations != null)
+            {
+                if(Velocity.X > 0) //walk to the right while stading
+                    this._animationManager.Play(_animations["WalkRight"]);
+                else if(Velocity.X < 0) //walk to the left while stading
+                    this._animationManager.Play(_animations["WalkLeft"]);
+                else if(Velocity.Y < 0) //walk to the up while stading
+                    this._animationManager.Play(_animations["WalkUp"]);
+                else if(Velocity.Y > 0) //walk to the down while stading
+                    this._animationManager.Play(_animations["WalkDown"]);
+                else
+                    this._animationManager.Stop();
             }
         }
         #endregion Methods

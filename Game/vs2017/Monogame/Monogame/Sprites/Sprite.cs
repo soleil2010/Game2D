@@ -18,7 +18,6 @@ namespace Monogame.Sprites
     {
         #region properties
         protected bool _jump;
-        protected Animation _animation;
         protected AnimationManager _animationManager;
         protected Dictionary<string, Animation> _animations;
 
@@ -37,7 +36,7 @@ namespace Monogame.Sprites
         public Input Input;
 
         /// <summary>
-        /// what's the speed of sprite
+        /// what's the speed of sprite, default:1
         /// </summary>
         public float Speed = 1;
 
@@ -47,7 +46,14 @@ namespace Monogame.Sprites
         public Vector2 Position
         {
             get => _position;
-            set => _position = value;
+            set
+            {
+                _position = value;
+
+                if (_animationManager != null)
+                    _animationManager.Position = _position;
+
+            }
         }
         /// <summary>
         /// get the sprite skin
@@ -67,6 +73,7 @@ namespace Monogame.Sprites
         public Sprite(Dictionary<string, Animation> animations)
         {
             _animations = animations;
+            _animationManager = new AnimationManager(_animations.First().Value);
         }
         /// <summary>
         /// constructor with a simple sprite
@@ -85,6 +92,8 @@ namespace Monogame.Sprites
         {
             if (_texture != null)
                 spriteBatch.Draw(_texture, Position, Color.White);
+            else if (_animationManager != null)
+                _animationManager.Draw(spriteBatch);
             else
                 throw new Exception("Sprite doesn't has a texture...");
         }
@@ -94,19 +103,19 @@ namespace Monogame.Sprites
         protected virtual void Move()
         {
             if (Keyboard.GetState().IsKeyDown(Input.Up) && !_jump)
-                Velocity.Y += -Speed*2;
+                this.Velocity.Y += -Speed*2;
             if (Keyboard.GetState().IsKeyDown(Input.Down))
-                Velocity.Y += Speed;
+                this.Velocity.Y += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Left))
                 if (Keyboard.GetState().IsKeyDown(Input.Sprint))
-                    Velocity.X += -Speed * 2;
+                    this.Velocity.X += -Speed * 2;
                 else
-                    Velocity.X += -Speed;
+                    this.Velocity.X += -Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Right))
                 if (Keyboard.GetState().IsKeyDown(Input.Sprint))
-                    Velocity.X += Speed * 2;
+                    this.Velocity.X += Speed * 2;
                 else
-                    Velocity.X += Speed;
+                    this.Velocity.X += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Jump) && !_jump)
             {
                 _jump = true;
@@ -119,33 +128,40 @@ namespace Monogame.Sprites
         {
             if (_jump)
             {
+                Velocity.Y -= Speed;
                 _jump = false;
             }
         }
         /// <summary>
         /// Set the animation depending of the behaviour of our character
-        /// </summary>
-        /*
+        /// </summary>        
         protected virtual void SetAnimations()
         {
-            if (Velocity.X > 0)
-                _animationManager.Play(_animation["WalkRight"]);
-            else if (Velocity.X < 0)
-                _animationManager.Play(_animation["WalkLeft"]);
-            else if (Velocity.Y > 0)
-                _animationManager.Play(_animation["WalkDown"]);
-            else if (Velocity.Y < 0)
-                _animationManager.Play(_animation["WalkUp"]);
-            else _animationManager.Stop();
+            if (_animations != null)
+            {
+                if (Velocity.X > 0)
+                    _animationManager.Play(_animations["WalkRight"]);
+                else if (Velocity.X < 0)
+                    _animationManager.Play(_animations["WalkLeft"]);
+                else if (Velocity.Y > 0)
+                    _animationManager.Play(_animations["WalkDown"]);
+                else if (Velocity.Y < 0)
+                    _animationManager.Play(_animations["WalkUp"]);
+                else _animationManager.Stop();
+            }
         }
-        */
+        
         /// <summary>
         /// method used to update data of sprite
         /// </summary>
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             Move();
+            SetAnimations();
             Jump();
+            if (_animationManager != null)
+                _animationManager.Update(gameTime);
+
             Position += Velocity;
             Velocity = Vector2.Zero;
         }
@@ -157,10 +173,7 @@ namespace Monogame.Sprites
         /// </summary>
         public AnimationManager AnimationManager
         {
-            get
-            {
-                return this._animationManager;
-            }
+            get => this._animationManager;
         }
         #endregion Accessors
 
