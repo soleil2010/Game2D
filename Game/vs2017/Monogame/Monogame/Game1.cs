@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Monogame.Models;
+using Monogame.Models.terrain;
 using Monogame.Sprites;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Monogame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
+        List<Plateform> plateforms;
 
         public Game1()
         {
@@ -59,7 +61,14 @@ namespace Monogame
                     Right = Keys.D,
                 },
             };
-        }
+            plateforms = new List<Plateform>()
+            {
+                { new Plateform(Content.Load<Texture2D>("rectangle"), new Vector2(20, 5))},
+                { new Plateform(new Rectangle(100,500,50,20)) },
+                { new Plateform( new Rectangle(300,200,50,20), Color.Red) },
+                { new Plateform(Content.Load<Texture2D>("rectangle"), new Rectangle(10,this.graphics.PreferredBackBufferHeight-50,50,10)) },
+            };
+    }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -80,7 +89,6 @@ namespace Monogame
                 Exit();
 
             sprite.Update(gameTime);
-
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
@@ -93,9 +101,12 @@ namespace Monogame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            // TODO: Add your drawing code here
-            sprite.Draw(spriteBatch);
 
+            // TODO: Add your drawing code here
+            foreach (var plateform in plateforms)
+                plateform.Draw(spriteBatch);
+
+            sprite.Draw(spriteBatch);      
             spriteBatch.End();
             base.Draw(gameTime);
         }
