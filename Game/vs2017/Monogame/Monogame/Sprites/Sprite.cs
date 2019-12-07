@@ -12,168 +12,94 @@ using System.Threading.Tasks;
 namespace Monogame.Sprites
 {
     /// <summary>
-    /// Template of sprite
+    /// Basic sprite,
+    /// It has an basic texture2D and we can move it
     /// </summary>
     public class Sprite
     {
         #region properties
-        protected bool _jump;
-        protected AnimationManager _animationManager;
-        protected Dictionary<string, Animation> _animations;
-
-        // position of sprite
-        protected Vector2 _position;
+        // Texture of sprite
         protected Texture2D _texture;
 
+        // Position of sprite
+        protected Vector2 _position;
+
         /// <summary>
-        /// speed on x, y position
+        /// Speed on x, y position
         /// </summary>
         public Vector2 Velocity;
 
         /// <summary>
-        /// input used to move our sprite
+        /// Input used to move our sprite
         /// </summary>
         public Input Input;
 
         /// <summary>
-        /// what's the speed of sprite, default:1
+        /// What's the speed of sprite, default:1
         /// </summary>
         public float Speed = 1;
-
-        /// <summary>
-        /// define the position or get the current position
-        /// </summary>
-        public Vector2 Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-
-                if (_animationManager != null)
-                    _animationManager.Position = _position;
-
-            }
-        }
-        /// <summary>
-        /// get the sprite skin
-        /// </summary>
-        public Texture2D Texture2D
-        {
-            get => _texture;
-        }
         #endregion properties
+
+        #region Constructor
+        public Sprite(Texture2D texture)
+        {
+            this._texture = texture;
+        }
+        #endregion Constructor
 
         #region Methods
         /// <summary>
-        /// Constructor with multiples sprites(picture with multiple images to generate an mouvement)
-        /// </summary>
-        /// <param name="animations">sprite with specific mouvement</param>
-        /// <example>we want add sprite of right walk with 3 frames --> animations.Add("WalkRight", new Animation(Content.Load<Texture2D>("Character/WalkRight"), 3))</example>
-        public Sprite(Dictionary<string, Animation> animations)
-        {
-            _animations = animations;
-            _animationManager = new AnimationManager(_animations.First().Value);
-        }
-        /// <summary>
-        /// constructor with a simple sprite
-        /// </summary>
-        /// <param name="texture">picture</param>
-        /// <example>new Character(Content.Load<Texture2D>("staticCharacter"))</example>
-        public Sprite(Texture2D texture)
-        {
-            _texture = texture;
-        }
-        /// <summary>
-        /// draw on screen our sprite with specific texture and position
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-            if (_texture != null)
-                spriteBatch.Draw(_texture, Position, Color.White);
-            else if (_animationManager != null)
-                _animationManager.Draw(spriteBatch);
-            else
-                throw new Exception("Sprite doesn't has a texture...");
-        }
-        /// <summary>
-        /// modify the velocity of sprite in terms of keys
+        /// Modify the velocity of sprite in terms of keys
         /// </summary>
         protected virtual void Move()
         {
-            if (Keyboard.GetState().IsKeyDown(Input.Up) && !_jump)
-                this.Velocity.Y += -Speed*2;
+            if (Keyboard.GetState().IsKeyDown(Input.Up))
+                this.Velocity.Y += -Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Down))
                 this.Velocity.Y += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Left))
-                if (Keyboard.GetState().IsKeyDown(Input.Sprint))
-                    this.Velocity.X += -Speed * 2;
-                else
-                    this.Velocity.X += -Speed;
+                this.Velocity.X += -Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Right))
-                if (Keyboard.GetState().IsKeyDown(Input.Sprint))
-                    this.Velocity.X += Speed * 2;
-                else
-                    this.Velocity.X += Speed;
-            if (Keyboard.GetState().IsKeyDown(Input.Jump) && !_jump)
-            {
-                _jump = true;
-            }
-        }
-        /// <summary>
-        /// when jump, disable the jump
-        /// </summary>
-        protected virtual void Jump()
-        {
-            if (_jump)
-            {
-                Velocity.Y -= Speed;
-                _jump = false;
-            }
-        }
-        /// <summary>
-        /// Set the animation depending of the behaviour of our character
-        /// </summary>        
-        protected virtual void SetAnimations()
-        {
-            if (_animations != null)
-            {
-                if (Velocity.X > 0)
-                    _animationManager.Play(_animations["WalkRight"]);
-                else if (Velocity.X < 0)
-                    _animationManager.Play(_animations["WalkLeft"]);
-                else if (Velocity.Y > 0)
-                    _animationManager.Play(_animations["WalkDown"]);
-                else if (Velocity.Y < 0)
-                    _animationManager.Play(_animations["WalkUp"]);
-                else _animationManager.Stop();
-            }
+                this.Velocity.X += Speed;
         }
         
         /// <summary>
-        /// method used to update data of sprite
+        /// Method used to draw sprite
+        /// </summary>
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            if (this._texture != null)
+                spriteBatch.Draw(this._texture, this._position, Color.White);
+            else
+                throw new Exception("Sprite doesn't have texture...");
+        }
+
+        /// <summary>
+        /// Method used to update data of sprite
         /// </summary>
         public virtual void Update(GameTime gameTime)
         {
             Move();
-            SetAnimations();
-            Jump();
-            if (_animationManager != null)
-                _animationManager.Update(gameTime);
-
-            Position += Velocity;
+            _position += Velocity;
             Velocity = Vector2.Zero;
         }
         #endregion Methods
 
         #region Accessors
         /// <summary>
-        /// allow use to know the current state of the animation manager
+        /// Define the position or get the current position
         /// </summary>
-        public AnimationManager AnimationManager
+        public Vector2 Position
         {
-            get => this._animationManager;
+            get => _position;
+            set => _position = value;
+        }
+        /// <summary>
+        /// Get the current texture of sprite
+        /// </summary>
+        public Texture2D Texture
+        {
+            get => this._texture;
         }
         #endregion Accessors
 

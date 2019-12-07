@@ -16,8 +16,6 @@ namespace Monogame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
-        Character character;
-        Texture2D spriteTexture2D;
 
         public Game1()
         {
@@ -50,35 +48,18 @@ namespace Monogame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            spriteTexture2D = Content.Load<Texture2D>("teste");
-            sprite = new Character(spriteTexture2D);
-            sprite = new Sprite(spriteTexture2D);
-            sprite.Input = new Input();
-            sprite.Input.Up = Keys.W;
-            sprite.Input.Down = Keys.S;
-            sprite.Input.Left = Keys.A;
-            sprite.Input.Right = Keys.D;
-            sprite.Input.Sprint = Keys.LeftShift;
-            sprite.Input.Jump = Keys.Space;
-
-            // TODO: use this.Content to load your game content here
-            var animations = new Dictionary<string, Animation>();
-            animations.Add("WalkUp", new Animation(Content.Load<Texture2D>("stop"), 17) { FrameSpeed = 0 }) ;
-            animations.Add("WalkDown", new Animation(Content.Load<Texture2D>("stop"), 17) { FrameSpeed = 0 }) ;
-            animations.Add("WalkRight", new Animation(Content.Load<Texture2D>("WalkRight"), 1) { FrameSpeed = 0 }) ;
-            animations.Add("WalkLeft", new Animation(Content.Load<Texture2D>("stop"), 17) { FrameSpeed = 0f }) ;
-            character = new Character(animations);
-            character.Speed = 1.2f;
-            character.Input = new Input();
-            character.Input.Up = Keys.Up;
-            character.Input.Down = Keys.Down;
-            character.Input.Left = Keys.Left;
-            character.Input.Right = Keys.Right;
-            character.Input.Jump = Keys.RightShift;
-            character.Input.Sprint = Keys.RightControl;
-
+            sprite = new Sprite(Content.Load<Texture2D>("crouch"))
+            {
+                Speed = 2,
+                Input = new Input()
+                {
+                    Up = Keys.W,
+                    Left = Keys.A,
+                    Down = Keys.S,
+                    Right = Keys.D,
+                },
+            };
         }
-
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -97,17 +78,10 @@ namespace Monogame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            sprite.Velocity.Y += sprite.Speed;
-            // TODO: Add your update logic here
+
             sprite.Update(gameTime);
-            sprite.Position = new Vector2  (Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture2D.Width),
-                                            Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture2D.Height));
 
             // TODO: Add your update logic here
-            //character.Velocity.Y += character.Speed;
-            character.Update(gameTime);
-            character.Position = new Vector2  (Math.Min(Math.Max(0, character.Position.X), graphics.PreferredBackBufferWidth - character.AnimationManager.Animation.FrameWidth),
-                                                Math.Min(Math.Max(0, character.Position.Y), graphics.PreferredBackBufferHeight - character.AnimationManager.Animation.FrameHeight));
             base.Update(gameTime);
         }
 
@@ -121,7 +95,7 @@ namespace Monogame
             spriteBatch.Begin();
             // TODO: Add your drawing code here
             sprite.Draw(spriteBatch);
-            character.Draw(spriteBatch);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
