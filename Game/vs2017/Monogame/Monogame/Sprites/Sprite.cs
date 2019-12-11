@@ -38,12 +38,25 @@ namespace Monogame.Sprites
         /// What's the speed of sprite, default:1
         /// </summary>
         public float Speed = 1;
+
+        protected Rectangle _rectangle;
+
+        /// <summary>
+        /// define if sprite is on ground
+        /// </summary>
+        public bool grounded;
+
+        /// <summary>
+        /// define a gravity value
+        /// </summary>
+        public float gravity=0;
         #endregion properties
 
         #region Constructor
         public Sprite(Texture2D texture)
         {
             this._texture = texture;
+            this._rectangle = new Rectangle(0, 0, this._texture.Width, this._texture.Height);
         }
         #endregion Constructor
 
@@ -55,7 +68,7 @@ namespace Monogame.Sprites
         {
             if (Keyboard.GetState().IsKeyDown(Input.Up))
                 this.Velocity.Y += -Speed;
-            if (Keyboard.GetState().IsKeyDown(Input.Down))
+            if (Keyboard.GetState().IsKeyDown(Input.Down) && !grounded)
                 this.Velocity.Y += Speed;
             if (Keyboard.GetState().IsKeyDown(Input.Left))
                 this.Velocity.X += -Speed;
@@ -80,7 +93,13 @@ namespace Monogame.Sprites
         public virtual void Update(GameTime gameTime)
         {
             Move();
-            _position += Velocity;
+            Position += Velocity;
+            //sprite touch the ground ?
+            if (!grounded)
+            {
+                //add gravity when it doesn't touch ground
+                Position += new Vector2(0, gravity);
+            }
             Velocity = Vector2.Zero;
         }
         #endregion Methods
@@ -92,7 +111,11 @@ namespace Monogame.Sprites
         public Vector2 Position
         {
             get => _position;
-            set => _position = value;
+            set
+            {
+                _position = value;
+                _rectangle.Location = this._position.ToPoint();
+            }
         }
         /// <summary>
         /// Get the current texture of sprite
@@ -100,6 +123,11 @@ namespace Monogame.Sprites
         public Texture2D Texture
         {
             get => this._texture;
+        }
+
+        public Rectangle Rectangle
+        {
+            get => _rectangle;
         }
         #endregion Accessors
 

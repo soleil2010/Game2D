@@ -102,6 +102,11 @@ namespace Monogame.Models.terrain
             get => _texture;
             set => _texture = value;
         }
+
+        public Rectangle Rectangle
+        {
+            get => _rectangle;
+        }
         #endregion Accessors
     }
 }

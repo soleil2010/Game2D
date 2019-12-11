@@ -52,7 +52,8 @@ namespace Monogame
             // TODO: use this.Content to load your game content here
             sprite = new Sprite(Content.Load<Texture2D>("crouch"))
             {
-                Speed = 2,
+                gravity = 3,
+                Speed = 5,
                 Input = new Input()
                 {
                     Up = Keys.W,
@@ -63,11 +64,12 @@ namespace Monogame
             };
             plateforms = new List<Plateform>()
             {
-                { new Plateform(Content.Load<Texture2D>("rectangle"), new Vector2(20, 5))},
-                { new Plateform(new Rectangle(100,500,50,20)) },
-                { new Plateform( new Rectangle(300,200,50,20), Color.Red) },
-                { new Plateform(Content.Load<Texture2D>("rectangle"), new Rectangle(10,this.graphics.PreferredBackBufferHeight-50,50,10)) },
+                { new Plateform(Content.Load<Texture2D>("rectangle"), new Rectangle(200,this.graphics.PreferredBackBufferHeight-50,50,20)) },
+                { new Plateform(Content.Load<Texture2D>("rectangle"), new Rectangle(300,this.graphics.PreferredBackBufferHeight-100,50,20)) },
+                { new Plateform(new Rectangle(400,this.graphics.PreferredBackBufferHeight-150,50,20)) },
+                { new Plateform(new Rectangle(500,this.graphics.PreferredBackBufferHeight-100,50,20), Color.SandyBrown) },
             };
+
     }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -89,6 +91,33 @@ namespace Monogame
                 Exit();
 
             sprite.Update(gameTime);
+
+            //sprite has gravity
+            sprite.grounded = false;
+
+            foreach (var plateform in plateforms)
+            {
+                //check if we touch plateforms
+                if (plateform.Rectangle.Intersects(sprite.Rectangle))
+                {
+                    Console.WriteLine(sprite.Rectangle.Bottom);
+                    //sprite is on the top of plateform
+                    if (sprite.Rectangle.Bottom >= plateform.Rectangle.Top &&
+                        sprite.Rectangle.Bottom <= plateform.Rectangle.Bottom - plateform.Rectangle.Height*0.85)
+                    {
+                        //replace sprite on the top of plateform
+                        sprite.Position = new Vector2(sprite.Position.X, plateform.Rectangle.Top-sprite.Texture.Height);
+                        //sprite no longer undergoes gravity
+                        sprite.grounded = true;
+                    }
+                }
+            }
+
+            //sprite can't leave the area of game
+            sprite.Position = new Vector2(Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture.Width),
+                                          Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture.Height));
+
+            
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
@@ -102,7 +131,7 @@ namespace Monogame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            //Draw platforms
             foreach (var plateform in plateforms)
                 plateform.Draw(spriteBatch);
 
