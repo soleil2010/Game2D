@@ -46,6 +46,7 @@
     <Compile Include="Manages\AnimationManager.cs" />
     <Compile Include="Models\Animation.cs" />
     <Compile Include="Models\Input.cs" />
+    <Compile Include="Models\Terrain.cs" />
     <Compile Include="Models\terrain\Plateform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

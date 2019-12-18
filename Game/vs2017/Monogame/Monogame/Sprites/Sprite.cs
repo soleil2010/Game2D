@@ -18,6 +18,12 @@ namespace Monogame.Sprites
     public class Sprite
     {
         #region properties
+        public enum Direction { Up, Down, Right, Left}
+        /// <summary>
+        /// Direction where sprite looks
+        /// </summary>
+        public Direction Looking;
+
         // Texture of sprite
         protected Texture2D _texture;
 
@@ -39,6 +45,9 @@ namespace Monogame.Sprites
         /// </summary>
         public float Speed = 1;
 
+        /// <summary>
+        /// sprite is an rectangle
+        /// </summary>
         protected Rectangle _rectangle;
 
         /// <summary>
@@ -67,13 +76,25 @@ namespace Monogame.Sprites
         protected virtual void Move()
         {
             if (Keyboard.GetState().IsKeyDown(Input.Up))
+            {
+                Looking = Direction.Up;
                 this.Velocity.Y += -Speed;
+            }
             if (Keyboard.GetState().IsKeyDown(Input.Down) && !grounded)
+            {
+                Looking = Direction.Down;
                 this.Velocity.Y += Speed;
+            }
             if (Keyboard.GetState().IsKeyDown(Input.Left))
+            {
+                Looking = Direction.Left;
                 this.Velocity.X += -Speed;
+            }
             if (Keyboard.GetState().IsKeyDown(Input.Right))
+            {
+                Looking = Direction.Right;
                 this.Velocity.X += Speed;
+            }
         }
         
         /// <summary>
@@ -92,14 +113,15 @@ namespace Monogame.Sprites
         /// </summary>
         public virtual void Update(GameTime gameTime)
         {
-            Move();
-            Position += Velocity;
             //sprite touch the ground ?
             if (!grounded)
             {
+                Looking = Direction.Down;
                 //add gravity when it doesn't touch ground
                 Position += new Vector2(0, gravity);
             }
+            Move();
+            Position += Velocity;
             Velocity = Vector2.Zero;
         }
         #endregion Methods
