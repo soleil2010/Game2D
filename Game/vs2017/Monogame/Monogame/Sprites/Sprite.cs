@@ -94,12 +94,6 @@ namespace Monogame.Sprites
         {
             Move();
             Position += Velocity;
-            //sprite touch the ground ?
-            if (!grounded)
-            {
-                //add gravity when it doesn't touch ground
-                Position += new Vector2(0, gravity);
-            }
             Velocity = Vector2.Zero;
         }
         #endregion Methods
