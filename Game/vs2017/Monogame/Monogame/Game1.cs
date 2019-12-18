@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Monogame.Manages;
 using Monogame.Models;
 using Monogame.Models.terrain;
 using Monogame.Sprites;
@@ -17,13 +18,14 @@ namespace Monogame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
+        Gravity gravityClass;
         List<Plateform> plateforms;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 900;
-            graphics.PreferredBackBufferWidth = 900;
+            graphics.PreferredBackBufferHeight = 1000;
+            graphics.PreferredBackBufferWidth = 1900;
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
         }
@@ -48,12 +50,12 @@ namespace Monogame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            gravityClass = new Gravity();
             // TODO: use this.Content to load your game content here
             sprite = new Sprite(Content.Load<Texture2D>("crouch"))
             {
-                gravity = 3,
-                Speed = 5,
+                gravity = gravityClass.GravityValue,
+                Speed = 11,
                 Input = new Input()
                 {
                     Up = Keys.W,
@@ -89,12 +91,9 @@ namespace Monogame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            sprite.Update(gameTime);
-
             //sprite has gravity
+            sprite.Update(gameTime);
             sprite.grounded = false;
-
             foreach (var plateform in plateforms)
             {
                 //check if we touch plateforms
@@ -103,7 +102,7 @@ namespace Monogame
                     Console.WriteLine(sprite.Rectangle.Bottom);
                     //sprite is on the top of plateform
                     if (sprite.Rectangle.Bottom >= plateform.Rectangle.Top &&
-                        sprite.Rectangle.Bottom <= plateform.Rectangle.Bottom - plateform.Rectangle.Height*0.85)
+                        sprite.Rectangle.Bottom <= plateform.Rectangle.Top + plateform.Rectangle.Height)
                     {
                         //replace sprite on the top of plateform
                         sprite.Position = new Vector2(sprite.Position.X, plateform.Rectangle.Top-sprite.Texture.Height);
@@ -113,12 +112,24 @@ namespace Monogame
                 }
             }
 
+            if ((sprite.Position.Y + sprite.Texture.Height) == graphics.PreferredBackBufferHeight)
+            {
+                sprite.grounded = true;
+            }
+            // Update gravity of the sprite
+            gravityClass.Timer = gameTime.ElapsedGameTime.TotalSeconds;
+            if (sprite.grounded == true)
+            {
+                gravityClass.PreviousSpeed = 0;
+                gravityClass.PreviousTimer = (int)gameTime.TotalGameTime.TotalSeconds;
+            }
+            else
+                sprite.Position += new Vector2(0, gravityClass.SpeedChange());
+
             //sprite can't leave the area of game
             sprite.Position = new Vector2(Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture.Width),
                                           Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture.Height));
 
-            
-            // TODO: Add your update logic here
             base.Update(gameTime);
         }
 
