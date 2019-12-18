@@ -1,21 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Monogame.Models.terrain
 {
     /// <summary>
     /// Define plateforms of the game
     /// </summary>
-    public class Plateform
+    public class Plateform : Terrain
     {
         #region Properties
-        private Rectangle _rectangle;
-        private Texture2D _texture;
         private Color _color;
         #endregion Properties
 
@@ -79,34 +72,5 @@ namespace Monogame.Models.terrain
         }
         #endregion methods
 
-        #region Accessors
-        /// <summary>
-        /// get location of plateform
-        /// </summary>
-        public Vector2 Location
-        {
-            get => _rectangle.Location.ToVector2();
-        }
-        /// <summary>
-        /// get the size of plateform
-        /// </summary>
-        public Point Size
-        {
-            get => _rectangle.Size;
-        }
-        /// <summary>
-        /// Get or redefine the texture of plateform
-        /// </summary>
-        public Texture2D Texture
-        {
-            get => _texture;
-            set => _texture = value;
-        }
-
-        public Rectangle Rectangle
-        {
-            get => _rectangle;
-        }
-        #endregion Accessors
     }
 }

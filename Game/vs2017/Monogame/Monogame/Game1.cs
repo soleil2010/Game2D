@@ -54,6 +54,7 @@ namespace Monogame
             // TODO: use this.Content to load your game content here
             sprite = new Sprite(Content.Load<Texture2D>("crouch"))
             {
+                Looking = Sprite.Direction.Right,
                 gravity = gravityClass.GravityValue,
                 Speed = 11,
                 Input = new Input()
@@ -93,16 +94,18 @@ namespace Monogame
                 Exit();
             //sprite has gravity
             sprite.Update(gameTime);
+
+            //sprite has gravity
             sprite.grounded = false;
+
             foreach (var plateform in plateforms)
             {
-                //check if we touch plateforms
-                if (plateform.Rectangle.Intersects(sprite.Rectangle))
+                if(Collision(sprite, plateform) && sprite.Looking != Sprite.Direction.Up)
                 {
                     Console.WriteLine(sprite.Rectangle.Bottom);
                     //sprite is on the top of plateform
                     if (sprite.Rectangle.Bottom >= plateform.Rectangle.Top &&
-                        sprite.Rectangle.Bottom <= plateform.Rectangle.Top + plateform.Rectangle.Height)
+                        sprite.Rectangle.Bottom <= plateform.Rectangle.Bottom - plateform.Rectangle.Height*0.85)
                     {
                         //replace sprite on the top of plateform
                         sprite.Position = new Vector2(sprite.Position.X, plateform.Rectangle.Top-sprite.Texture.Height);
@@ -133,6 +136,40 @@ namespace Monogame
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Check if sprite is on top of terrain
+        /// </summary>
+        /// <param name="sprite">all objects which is inheritance of the sprite</param>
+        /// <param name="terrain">all objects which is inheritance of the terrain</param>
+        /// <returns>true when the bottom of sprite is on the platform and at the top of it</returns>
+        private bool Collision(Sprite sprite, Terrain terrain)
+        {
+            bool collision = false;
+            //coordinate of x positions of sprite
+            float xSpriteLeft = sprite.Position.X;
+            float xSpriteRight = sprite.Position.X + sprite.Texture.Width;
+            //coordinate of y positions of sprite
+            float ySpriteTop = sprite.Position.Y;
+            float ySpriteBottom = sprite.Position.Y + sprite.Texture.Height;
+
+            //coordinate of x positions of terrain
+            float xTerrainLeft = terrain.Position.X;
+            float xTerrainRight = terrain.Position.X + terrain.Size.X;
+            //coordinate of y positions of terrain
+            float yTerrainTop = terrain.Position.Y;
+
+            if (ySpriteBottom > yTerrainTop && ySpriteBottom < yTerrainTop + terrain.Size.Y)
+            {
+                if (xSpriteLeft > xTerrainLeft && xSpriteLeft < xTerrainRight)
+                    collision = true;
+                if(xSpriteRight > xTerrainLeft && xSpriteRight < xTerrainRight)
+                    collision = true;
+                if (xTerrainLeft > xSpriteLeft - xSpriteLeft * 0.1 && xSpriteRight + xSpriteRight * 0.1 > xTerrainRight)
+                    collision = true;
+            }
+
+            return collision;
+        }
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
