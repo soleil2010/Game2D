@@ -9,11 +9,11 @@ namespace Monogame.Models
 {
     public class Input
     {
-        public Keys Up { get; set; }
-        public Keys Left { get; set; }
-        public Keys Down { get; set; }
-        public Keys Right { get; set; }
-        public Keys Jump { get; set; }
-        public Keys Sprint { get; set; }
+        public Keys Up;
+        public Keys Left;
+        public Keys Down;
+        public Keys Right;
+        public Keys Jump;
+        public Keys Sprint;
     }
 }

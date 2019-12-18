@@ -18,9 +18,8 @@ namespace Monogame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Sprite sprite;
-        Gravity gravityClass;
         List<Plateform> plateforms;
-
+        const float gravity= 1;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,19 +49,22 @@ namespace Monogame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            gravityClass = new Gravity();
             // TODO: use this.Content to load your game content here
             sprite = new Sprite(Content.Load<Texture2D>("crouch"))
             {
                 Looking = Sprite.Direction.Right,
-                gravity = gravityClass.GravityValue,
-                Speed = 11,
+                //gravity = gravityClass.GravityValue,
+                Gravity = gravity,
+                Friction = 0.2f,
+                Speed = 5,
                 Input = new Input()
                 {
                     Up = Keys.W,
                     Left = Keys.A,
                     Down = Keys.S,
                     Right = Keys.D,
+                    Sprint = Keys.LeftShift,
+                    Jump = Keys.Space,
                 },
             };
             plateforms = new List<Plateform>()
@@ -96,39 +98,21 @@ namespace Monogame
             sprite.Update(gameTime);
 
             //sprite has gravity
-            sprite.grounded = false;
+            sprite.Grounded = false;
 
             foreach (var plateform in plateforms)
             {
                 if(Collision(sprite, plateform) && sprite.Looking != Sprite.Direction.Up)
                 {
-                    Console.WriteLine(sprite.Rectangle.Bottom);
-                    //sprite is on the top of plateform
-                    if (sprite.Rectangle.Bottom >= plateform.Rectangle.Top &&
-                        sprite.Rectangle.Bottom <= plateform.Rectangle.Bottom - plateform.Rectangle.Height*0.85)
-                    {
-                        //replace sprite on the top of plateform
-                        sprite.Position = new Vector2(sprite.Position.X, plateform.Rectangle.Top-sprite.Texture.Height);
-                        //sprite no longer undergoes gravity
-                        sprite.grounded = true;
-                    }
+                    sprite.Position = new Vector2(sprite.Position.X, plateform.Position.Y - sprite.Texture.Height);
+                    sprite.Gravity = 0;
+                    sprite.Grounded = true;
                 }
+                sprite.Gravity = gravity;
             }
 
-            if ((sprite.Position.Y + sprite.Texture.Height) == graphics.PreferredBackBufferHeight)
-            {
-                sprite.grounded = true;
-            }
-            // Update gravity of the sprite
-            gravityClass.Timer = gameTime.ElapsedGameTime.TotalSeconds;
-            if (sprite.grounded == true)
-            {
-                gravityClass.PreviousSpeed = 0;
-                gravityClass.PreviousTimer = (int)gameTime.TotalGameTime.TotalSeconds;
-            }
-            else
-                sprite.Position += new Vector2(0, gravityClass.SpeedChange());
-
+            if(sprite.Position.Y+sprite.Texture.Height == graphics.PreferredBackBufferHeight)
+                sprite.Grounded = true;
             //sprite can't leave the area of game
             sprite.Position = new Vector2(Math.Min(Math.Max(0, sprite.Position.X), graphics.PreferredBackBufferWidth - sprite.Texture.Width),
                                           Math.Min(Math.Max(0, sprite.Position.Y), graphics.PreferredBackBufferHeight - sprite.Texture.Height));

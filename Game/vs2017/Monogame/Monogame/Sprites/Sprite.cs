@@ -53,12 +53,16 @@ namespace Monogame.Sprites
         /// <summary>
         /// define if sprite is on ground
         /// </summary>
-        public bool grounded;
+        public bool Grounded;
 
         /// <summary>
         /// define a gravity value
         /// </summary>
-        public float gravity=0;
+        public float Gravity=0;
+        /// <summary>
+        /// define a friction value
+        /// </summary>
+        public float Friction=1;
         #endregion properties
 
         #region Constructor
@@ -75,25 +79,34 @@ namespace Monogame.Sprites
         /// </summary>
         protected virtual void Move()
         {
+            if (Keyboard.GetState().IsKeyDown(Input.Jump) && Grounded)
+            {
+                Looking = Direction.Up;
+                this.Velocity.Y = -20;
+            }
             if (Keyboard.GetState().IsKeyDown(Input.Up))
             {
                 Looking = Direction.Up;
-                this.Velocity.Y += -Speed;
+                this.Velocity.Y = -Speed;
             }
-            if (Keyboard.GetState().IsKeyDown(Input.Down) && !grounded)
+            if (Keyboard.GetState().IsKeyDown(Input.Down) && !Grounded)
             {
                 Looking = Direction.Down;
-                this.Velocity.Y += Speed;
+                this.Velocity.Y = Speed;
             }
             if (Keyboard.GetState().IsKeyDown(Input.Left))
             {
                 Looking = Direction.Left;
-                this.Velocity.X += -Speed;
+                this.Velocity.X = -Speed;
+                if (Keyboard.GetState().IsKeyDown(Input.Sprint))
+                    this.Velocity.X *= 2;
             }
             if (Keyboard.GetState().IsKeyDown(Input.Right))
             {
                 Looking = Direction.Right;
-                this.Velocity.X += Speed;
+                this.Velocity.X = Speed;
+                if (Keyboard.GetState().IsKeyDown(Input.Sprint))
+                    this.Velocity.X *= 2;
             }
         }
         
@@ -114,8 +127,16 @@ namespace Monogame.Sprites
         public virtual void Update(GameTime gameTime)
         {
             Move();
+            if (Math.Abs(Velocity.X) < Friction) Velocity.X = 0;
+
+            if (Velocity.X < 0)
+                Velocity.X += Friction;
+            else if (Velocity.X > 0)
+                Velocity.X -= Friction;
+            
+
+            Velocity.Y += Gravity;
             Position += Velocity;
-            Velocity = Vector2.Zero;
         }
         #endregion Methods
 
